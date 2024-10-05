@@ -56,14 +56,14 @@ const InputForm = ({ type, category }) => {
       >
         {type === "REGISTER" && category === "ORG" && (
           <div className="flex flex-col">
-            <label htmlFor="">Organisation Name</label>
+            <label htmlFor="">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Enter organisation name"
+              placeholder={`Enter ${category === "ORG" ? "Organisation's" : "Student's"} Name`}
               className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
@@ -115,7 +115,7 @@ const InputForm = ({ type, category }) => {
         <div className="flex gap-2 justify-center items-center">
           <div className="flex flex-col w-[50%]">
             <label htmlFor="">
-              {category === "ORG" ? "Organisation's" : "Student's"} Email
+               Email
             </label>
             <input
               type="email"
@@ -123,16 +123,14 @@ const InputForm = ({ type, category }) => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder={`Enter ${
-                category === "ORG" ? "organisation's" : "student's"
-              } email`}
+              placeholder = {`Enter ${category === "ORG" ? "Organisation's" : "Student's"} Email address`}
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
 
           <div className="flex flex-col w-[50%]">
-            <label htmlFor="">
-              {category === "ORG" ? "Organisation's" : "Student's"} Phone Number
+            <label htmlFor="" className="">
+               <span className="text-s">Phone Number</span>
             </label>
             <input
               type="tel"
@@ -140,9 +138,7 @@ const InputForm = ({ type, category }) => {
               value={formData.mobileNumber}
               onChange={handleChange}
               required
-              placeholder={`Enter ${
-                category === "ORG" ? "organisation's" : "student's"
-              } Phone Number`}
+              placeholder= {`Enter ${category === "ORG" ? "Organisation's" : "Student's"} Phone Number`}
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
