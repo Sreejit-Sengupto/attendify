@@ -63,7 +63,7 @@ const InputForm = ({ type, category }) => {
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Enter organisation name"
+              placeholder="Enter name"
               className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
@@ -123,16 +123,14 @@ const InputForm = ({ type, category }) => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder={`Enter ${
-                category === "ORG" ? "organisation's" : "student's"
-              } email`}
+              placeholder = "Enter Email"
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
 
           <div className="flex flex-col w-[50%]">
-            <label htmlFor="">
-              {category === "ORG" ? "Organisation's" : "Student's"} Phone Number
+            <label htmlFor="" className="">
+              {category === "ORG" ? "Organisation's" : "Student's"} <span className="text-sm">Phone Number</span>
             </label>
             <input
               type="tel"
@@ -140,9 +138,7 @@ const InputForm = ({ type, category }) => {
               value={formData.mobileNumber}
               onChange={handleChange}
               required
-              placeholder={`Enter ${
-                category === "ORG" ? "organisation's" : "student's"
-              } Phone Number`}
+              placeholder={`Enter Phone Number`}
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
