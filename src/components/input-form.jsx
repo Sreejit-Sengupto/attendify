@@ -12,13 +12,11 @@ const InputForm = ({ type, category }) => {
     firstName: "",
     lastName: "",
     orgCode: "",
-    address: {
-      line1: "",
-      line2: "",
-      city: "",
-      state: "",
-      pincode: "",
-    },
+    line1: "",
+    line2: "",
+    city: "",
+    state: "",
+    pincode: "",
   });
 
   const [showPassword, setShowPassword] = React.useState(true);
@@ -101,7 +99,7 @@ const InputForm = ({ type, category }) => {
               <label htmlFor="">Organisation Code</label>
               <input
                 type="text"
-                name="lastName"
+                name="orgCode"
                 value={formData.orgCode}
                 onChange={handleChange}
                 required
@@ -151,7 +149,7 @@ const InputForm = ({ type, category }) => {
               <input
                 type="text"
                 name="line1"
-                value={formData.address.line1}
+                value={formData.line1}
                 onChange={handleChange}
                 required
                 placeholder="Eg. Locality, Street name..."
@@ -164,7 +162,7 @@ const InputForm = ({ type, category }) => {
               <input
                 type="text"
                 name="line2"
-                value={formData.address.line2}
+                value={formData.line2}
                 onChange={handleChange}
                 placeholder="Eg. Additional Info, Landmark... (optional)"
                 className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-secondary"
@@ -177,7 +175,7 @@ const InputForm = ({ type, category }) => {
                 <input
                   type="text"
                   name="state"
-                  value={formData.address.state}
+                  value={formData.state}
                   onChange={handleChange}
                   required
                   placeholder="Enter name of the State"
@@ -189,7 +187,7 @@ const InputForm = ({ type, category }) => {
                 <input
                   type="text"
                   name="city"
-                  value={formData.address.city}
+                  value={formData.city}
                   onChange={handleChange}
                   required
                   placeholder="Enter name of the City"
@@ -203,7 +201,7 @@ const InputForm = ({ type, category }) => {
               <input
                 type="text"
                 name="pincode"
-                value={formData.address.pincode}
+                value={formData.pincode}
                 onChange={handleChange}
                 required
                 placeholder="Enter pincode/postal code"
