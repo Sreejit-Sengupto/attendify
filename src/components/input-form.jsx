@@ -42,7 +42,8 @@ const InputForm = ({ type, category }) => {
           className="w-[12rem] h-[12rem]"
         />
         <p className="absolute top-[13rem] text-gray-500 text-xl font-semibold">
-          Register {category === "ORG" ? "your Organisation" : " as a Student"}
+          {type === "REGISTER" ? "Register" : "Login"}{" "}
+          {category === "ORG" ? "as an Organisation" : " as a Student"}
         </p>
       </div>
 
@@ -61,7 +62,9 @@ const InputForm = ({ type, category }) => {
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder={`Enter ${category === "ORG" ? "Organisation's" : "Student's"} Name`}
+              placeholder={`Enter ${
+                category === "ORG" ? "Organisation's" : "Student's"
+              } Name`}
               className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
@@ -111,35 +114,43 @@ const InputForm = ({ type, category }) => {
         )}
 
         <div className="flex gap-2 justify-center items-center">
-          <div className="flex flex-col w-[50%]">
-            <label htmlFor="">
-               Email
-            </label>
+          <div
+            className={`flex flex-col ${
+              type === "REGISTER" ? "w-[50%]" : "w-full"
+            }`}
+          >
+            <label htmlFor="">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder = {`Enter ${category === "ORG" ? "Organisation's" : "Student's"} Email address`}
+              placeholder={`Enter ${
+                category === "ORG" ? "Organisation's" : "Student's"
+              } Email address`}
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
             />
           </div>
 
-          <div className="flex flex-col w-[50%]">
-            <label htmlFor="" className="">
-               <span className="text-s">Phone Number</span>
-            </label>
-            <input
-              type="tel"
-              name="mobileNumber"
-              value={formData.mobileNumber}
-              onChange={handleChange}
-              required
-              placeholder= {`Enter ${category === "ORG" ? "Organisation's" : "Student's"} Phone Number`}
-              className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
-            />
-          </div>
+          {type === "REGISTER" && (
+            <div className="flex flex-col w-[50%]">
+              <label htmlFor="" className="">
+                <span className="text-s">Phone Number</span>
+              </label>
+              <input
+                type="tel"
+                name="mobileNumber"
+                value={formData.mobileNumber}
+                onChange={handleChange}
+                required
+                placeholder={`Enter ${
+                  category === "ORG" ? "Organisation's" : "Student's"
+                } Phone Number`}
+                className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-secondary"
+              />
+            </div>
+          )}
         </div>
 
         {type === "REGISTER" && category === "ORG" && (
@@ -219,7 +230,9 @@ const InputForm = ({ type, category }) => {
             value={formData.password}
             onChange={handleChange}
             required
-            placeholder="Enter a password"
+            placeholder={
+              type === "REGISTER" ? "Enter a password" : "Enter your password"
+            }
             className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-secondary"
           />
           <button
@@ -231,7 +244,7 @@ const InputForm = ({ type, category }) => {
         </div>
 
         <button className="bg-primary text-white font-medium p-3 rounded-lg">
-          Register
+          {type === "REGISTER" ? "Register" : "Login"}
         </button>
       </form>
 
