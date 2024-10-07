@@ -1,8 +1,29 @@
 import React from "react";
-import InputForm from "../../components/input-form";
+import InputForm from "../../../components/input-form";
+import { useUserContext } from "../../../providers/UserProvider";
+import { useNavigate } from "react-router-dom";
+import { useInputForm } from "../../../providers/InputFormProvider";
 
-const Login = () => {
+const LoginForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
+
+  const { login } = useUserContext();
+  const { formData } = useInputForm();
+
+  const navigate = useNavigate();
+
+  const loginOrg = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("Logging in...");
+      console.log(formData.email, formData.password);
+      await login(formData.email, formData.password);
+      navigate("/dashboard");
+      console.log("Login successfull");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -29,7 +50,13 @@ const Login = () => {
         </button>
       </div>
       <div>
-        {category === "ORG" && <InputForm category={category} type={"LOGIN"} />}
+        {category === "ORG" && (
+          <InputForm
+            category={category}
+            type={"LOGIN"}
+            formHandler={loginOrg}
+          />
+        )}
       </div>
       <div>
         {category === "STUDENT" && (
@@ -40,4 +67,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

@@ -8,9 +8,15 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Register from "./pages/auth/register";
-import Login from "./pages/auth/login";
+
 import Home from "./pages/home";
+import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login";
+import EmailVerification from "./pages/email-verification";
+import { UserProvider } from "./providers/UserProvider";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./pages/protected-route";
+import DashboardPage from "./pages/Dashboard/dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,12 +24,18 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/verify-email" element={<EmailVerification />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </>
   )
 );
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  );
 };
 
 export default App;
