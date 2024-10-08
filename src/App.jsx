@@ -1,16 +1,17 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-
 import {
   Route,
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Register from "./pages/auth/register";
-import Login from "./pages/auth/login";
+
 import Home from "./pages/home";
+import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login";
+import EmailVerification from "./pages/email-verification";
+import { UserProvider } from "./providers/UserProvider";
+import Dashboard from "./pages/dashboard";
+import AdminDashboard from "./pages/admin/dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,12 +19,19 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/verify-email" element={<EmailVerification />} />
+      <Route path="/dashboard/:userId" element={<Dashboard />} />
+      <Route path="/admin/dashboard/:userId" element={<AdminDashboard />} />
     </>
   )
 );
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  );
 };
 
 export default App;

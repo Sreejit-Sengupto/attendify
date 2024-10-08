@@ -2,22 +2,10 @@ import React from "react";
 import appLogo from "../assets/Attendify.png";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useInputForm } from "../providers/InputFormProvider";
 
-const InputForm = ({ type, category }) => {
-  const [formData, setFormData] = React.useState({
-    name: "",
-    mobileNumber: "",
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    orgCode: "",
-    line1: "",
-    line2: "",
-    city: "",
-    state: "",
-    pincode: "",
-  });
+const InputForm = ({ type, category, formHandler }) => {
+  const { formData, setFormData } = useInputForm();
 
   const [showPassword, setShowPassword] = React.useState(true);
 
@@ -50,7 +38,7 @@ const InputForm = ({ type, category }) => {
       <div className="w-[90%] md:w-[60%] h-[2px] bg-slate-200 mx-auto"></div>
 
       <form
-        action=""
+        onSubmit={formHandler}
         className="md:w-[50%] md:mx-auto font-garamond p-3 flex flex-col gap-3 my-4"
       >
         {type === "REGISTER" && category === "ORG" && (
