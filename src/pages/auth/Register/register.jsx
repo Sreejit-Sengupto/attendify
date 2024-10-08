@@ -31,7 +31,7 @@ const RegisterForm = () => {
         city: formData.city,
       };
 
-      await databases.createDocument(
+      const newOrg = await databases.createDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
         ID.unique(),
@@ -40,7 +40,7 @@ const RegisterForm = () => {
 
       await login(formData.email, formData.password);
 
-      navigate("/dashboard");
+      navigate(`/admin/dashboard/${newOrg.$id}`);
 
       console.log("Registered successfully!!");
     } catch (error) {
@@ -75,7 +75,7 @@ const RegisterForm = () => {
         organisation: [formData.orgCode],
       };
 
-      await databases.createDocument(
+      const newStd = await databases.createDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
         ID.unique(),
@@ -84,7 +84,7 @@ const RegisterForm = () => {
 
       await login(formData.email, formData.password);
 
-      navigate("/dashboard");
+      navigate(`/dashboard/${newStd.$id}`);
 
       console.log("Registered successfully!!");
     } catch (error) {
