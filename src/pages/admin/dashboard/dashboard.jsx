@@ -1,9 +1,10 @@
 import React from "react";
-import { useUserContext } from "../../providers/UserProvider";
-import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../../providers/UserProvider";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DashboardPage = () => {
-  const { logout } = useUserContext();
+  const { logout, userData, getUserData } = useUserContext();
+
   const navigate = useNavigate();
 
   const logoutUser = async () => {
@@ -14,6 +15,16 @@ const DashboardPage = () => {
       console.log(error);
     }
   };
+
+  const { userId } = useParams();
+
+  React.useEffect(() => {
+    getUserData(
+      import.meta.env.VITE_APPWRITE_DB_ID,
+      import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
+      userId
+    );
+  }, []);
 
   return (
     <div className="w-full h-[100dvh] flex flex-col">
@@ -26,7 +37,11 @@ const DashboardPage = () => {
           Logout
         </button>
       </div>
-      <div>Dashboard</div>
+      <div>
+        <p>Admin Dashboard</p>
+        <p>OrgID: {userData.$id}</p>
+        <p>Org Name: {userData.name}</p>
+      </div>
     </div>
   );
 };

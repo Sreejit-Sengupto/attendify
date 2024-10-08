@@ -3,6 +3,8 @@ import InputForm from "../../../components/input-form";
 import { useUserContext } from "../../../providers/UserProvider";
 import { useNavigate } from "react-router-dom";
 import { useInputForm } from "../../../providers/InputFormProvider";
+import { databases } from "../../../appwrite/config";
+import { Query } from "appwrite";
 
 const LoginForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
@@ -15,10 +17,45 @@ const LoginForm = () => {
   const loginOrg = async (e) => {
     try {
       e.preventDefault();
+
+      const validUser = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
+        [Query.equal("email", [formData.email])]
+      );
+
+      if (validUser.total === 0) {
+        alert("Invalid user, please check your email");
+        return;
+      }
+
       console.log("Logging in...");
-      console.log(formData.email, formData.password);
       await login(formData.email, formData.password);
-      navigate("/dashboard");
+      navigate(`/admin/dashboard/${validUser.documents[0].$id}`);
+      console.log("Login successfull");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loginStudent = async (e) => {
+    try {
+      e.preventDefault();
+
+      const validUser = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
+        [Query.equal("email", [formData.email])]
+      );
+
+      if (validUser.total === 0) {
+        alert("Invalid user, please check your email");
+        return;
+      }
+
+      console.log("Logging in...");
+      await login(formData.email, formData.password);
+      navigate(`/dashboard/${validUser.documents[0].$id}`);
       console.log("Login successfull");
     } catch (error) {
       console.log(error);
@@ -60,7 +97,11 @@ const LoginForm = () => {
       </div>
       <div>
         {category === "STUDENT" && (
-          <InputForm category={category} type={"LOGIN"} />
+          <InputForm
+            category={category}
+            type={"LOGIN"}
+            formHandler={loginStudent}
+          />
         )}
       </div>
     </>

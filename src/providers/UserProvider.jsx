@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { account } from "../appwrite/config";
+import { account, databases } from "../appwrite/config";
 import { Loader2 } from "lucide-react";
 
 const UserContext = createContext();
@@ -7,6 +7,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
+  const [userData, setUserData] = React.useState({});
 
   React.useEffect(() => {
     getUser();
@@ -47,9 +48,21 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const getUserData = async (dbId, collectionId, docId) => {
+    try {
+      const data = await databases.getDocument(dbId, collectionId, docId);
+      setUserData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const contextData = {
     user,
     setUser,
+    userData,
+    setUserData,
+    getUserData,
     getUser,
     login,
     logout,

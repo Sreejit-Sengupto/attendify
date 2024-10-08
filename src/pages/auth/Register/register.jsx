@@ -2,9 +2,8 @@ import React from "react";
 import InputForm from "../../../components/input-form";
 import { useInputForm } from "../../../providers/InputFormProvider";
 import { register } from "../../../appwrite/auth";
-import { account, databases } from "../../../appwrite/config";
+import { databases } from "../../../appwrite/config";
 import { ID } from "appwrite";
-import { generateOrgCode } from "../../../utils/codeGenerator";
 import { useUserContext } from "../../../providers/UserProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -30,7 +29,6 @@ const RegisterForm = () => {
         addressLine2: formData.line2,
         state: formData.state,
         city: formData.city,
-        orgCode: generateOrgCode(formData.name),
       };
 
       await databases.createDocument(
@@ -47,6 +45,51 @@ const RegisterForm = () => {
       console.log("Registered successfully!!");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const registerStudent = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("Registering...");
+      const org = await databases.getDocument(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
+        formData.orgCode
+      );
+
+      if (!org) {
+        alert("Invalid org-code");
+        return;
+      }
+
+      await register(formData.firstName, formData.email, formData.password);
+
+      // check if org exists
+
+      const dbData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phoneNumber: formData.mobileNumber,
+        organisation: [formData.orgCode],
+      };
+
+      await databases.createDocument(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
+        ID.unique(),
+        dbData
+      );
+
+      await login(formData.email, formData.password);
+
+      navigate("/dashboard");
+
+      console.log("Registered successfully!!");
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
     }
   };
 
@@ -85,7 +128,11 @@ const RegisterForm = () => {
       </div>
       <div>
         {category === "STUDENT" && (
-          <InputForm category={category} type={"REGISTER"} />
+          <InputForm
+            category={category}
+            type={"REGISTER"}
+            formHandler={registerStudent}
+          />
         )}
       </div>
     </>

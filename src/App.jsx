@@ -1,7 +1,3 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-
 import {
   Route,
   createBrowserRouter,
@@ -14,9 +10,8 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import EmailVerification from "./pages/email-verification";
 import { UserProvider } from "./providers/UserProvider";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./pages/protected-route";
-import DashboardPage from "./pages/Dashboard/dashboard";
+import Dashboard from "./pages/dashboard";
+import AdminDashboard from "./pages/admin/dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +20,8 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify-email" element={<EmailVerification />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard/:userId" element={<Dashboard />} />
+      <Route path="/admin/dashboard/:userId" element={<AdminDashboard />} />
     </>
   )
 );
