@@ -33,7 +33,9 @@ export const UserProvider = ({ children }) => {
 
       if (!loggedInUser.emailVerification) {
         console.log("Sending verification mail...");
-        await account.createVerification("http://localhost:5173/verify-email");
+        await account.createVerification(
+          "http://attendifyapp.vercel.app/verify-email"
+        );
       }
     } catch (error) {
       console.log(error);

@@ -6,7 +6,7 @@ import { CheckCircle, CircleX, Loader } from "lucide-react";
 const EmailVerification = () => {
   const [queryParams, setQueryParams] = useSearchParams();
   const [verified, setVerified] = React.useState(false);
-  const [err, setErr] = React.useState(true);
+  const [err, setErr] = React.useState(false);
 
   const verifyEmail = async () => {
     try {
