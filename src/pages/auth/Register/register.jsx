@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const RegisterForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
 
-  const { formData } = useInputForm();
+  const { formData, setFormData } = useInputForm();
   const { login } = useUserContext();
 
   const navigate = useNavigate();
@@ -45,6 +45,21 @@ const RegisterForm = () => {
       console.log("Registered successfully!!");
     } catch (error) {
       console.log(error);
+    } finally {
+      setFormData({
+        name: "",
+        mobileNumber: "",
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        orgCode: "",
+        line1: "",
+        line2: "",
+        city: "",
+        state: "",
+        pincode: "",
+      });
     }
   };
 
@@ -90,17 +105,32 @@ const RegisterForm = () => {
     } catch (error) {
       console.log(error);
       alert(error.message);
+    } finally {
+      setFormData({
+        name: "",
+        mobileNumber: "",
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        orgCode: "",
+        line1: "",
+        line2: "",
+        city: "",
+        state: "",
+        pincode: "",
+      });
     }
   };
 
   return (
     <>
-      <div className="flex justify-center items-center my-2 gap-2 font-garamond">
+      <div className="flex justify-center items-center my-2 gap-2 font-garamond text-textPrimary">
         <button
           className={`${
             category === "STUDENT"
-              ? "bg-secondary p-2 rounded"
-              : "p-2 border-b-2 border-b-secondary"
+              ? "bg-accent p-2 rounded"
+              : "p-2 border-b-2 border-white border-b-accent"
           }`}
           onClick={() => setCategory("STUDENT")}
         >
@@ -109,8 +139,8 @@ const RegisterForm = () => {
         <button
           className={`${
             category === "ORG"
-              ? "bg-secondary p-2 rounded"
-              : "p-2 border-b-2 border-b-secondary"
+              ? "bg-accent p-2 rounded"
+              : "p-2 border-b-2 border-b-accent"
           }`}
           onClick={() => setCategory("ORG")}
         >

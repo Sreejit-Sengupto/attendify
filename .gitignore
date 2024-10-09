@@ -14,6 +14,10 @@ dist-ssr
 
 .env
 
+# temporary
+drawer.jsx
+utils.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
