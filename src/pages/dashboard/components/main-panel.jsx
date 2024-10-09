@@ -2,11 +2,10 @@ import React from "react";
 import { useUserContext } from "../../../providers/UserProvider";
 import { Link } from "react-router-dom";
 import { avatars } from "../../../appwrite/config";
-import { LocateFixed, Mail, MapPin, Phone, Pin } from "lucide-react";
+import { Mail, MapPin, Phone, Pin } from "lucide-react";
 
 const MainPanel = () => {
   const { userData } = useUserContext();
-  console.log(userData);
 
   const organisations =
     userData.organisation &&
