@@ -4,15 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        text: "#050316",
-        background: "#fbfbfe",
-        primary: "#2f27ce",
-        secondary: "#dddbff",
-        accent: "#443dff",
+        textPrimary: "#E5E5E7",
+        textSecondary: "#A9A9AB",
+        background: "#18181C",
+        primary: "#121215",
+        secondary: "#1C1D20",
+        accent: "#FC356C",
+        border: "#2D2C31",
       },
       fontFamily: {
-        garamond: ["EB Garamond", "serif"],
-        roboto: ["Roboto", "sans-serif"],
+        // garamond: ["EB Garamond", "serif"],
+        // roboto: ["Roboto", "sans-serif"],
+        poppins: ["Poppins", "serif"],
       },
     },
   },
