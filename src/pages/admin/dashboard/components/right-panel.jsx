@@ -1,16 +1,6 @@
 import React from "react";
 import { avatars } from "../../../../appwrite/config";
 import { useUserContext } from "../../../../providers/UserProvider";
-// import {
-//   Drawer,
-//   DrawerClose,
-//   DrawerContent,
-//   DrawerDescription,
-//   DrawerFooter,
-//   DrawerHeader,
-//   DrawerTitle,
-//   DrawerTrigger,
-// } from "../../../../components/drawer";
 
 import {
   ChevronLeft,
@@ -23,7 +13,7 @@ import {
 
 const RightPanel = () => {
   const { userData } = useUserContext();
-  const avatar = avatars.getInitials(userData.name);
+  const avatar = userData.name && avatars.getInitials(userData.name);
 
   const copyOrgId = () => {
     navigator.clipboard.writeText(userData.$id);
@@ -49,7 +39,9 @@ const DesktopPanel = ({ userData, avatar, copyOrgId }) => {
           height={150}
           className="rounded-full bg-white border-4 border-textPrimary"
         />
-        <p className="text-2xl font-semibold">{userData.name}</p>
+        <p className="text-2xl font-semibold">
+          {userData.name && userData.name}
+        </p>
       </div>
 
       <div className="flex flex-col justify-center items-start gap-4 my-5">
@@ -60,21 +52,21 @@ const DesktopPanel = ({ userData, avatar, copyOrgId }) => {
           <span>
             <KeyRound />
           </span>
-          <span>{userData.$id}</span>
+          <span>{userData.$id && userData.$id}</span>
         </button>
 
         <p className="flex justify-center items-center gap-1 border-b-2 border-border">
           <span>
             <Mail />
           </span>
-          <span>{userData.email}</span>
+          <span>{userData.email && userData.email}</span>
         </p>
 
         <p className="flex justify-center items-center gap-1 border-b-2 border-border">
           <span>
             <PhoneCall />
           </span>
-          <span>{userData.phoneNumber}</span>
+          <span>{userData.phoneNumber && userData.phoneNumber}</span>
         </p>
       </div>
 

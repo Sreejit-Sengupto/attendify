@@ -45,6 +45,8 @@ export const UserProvider = ({ children }) => {
   const logout = async () => {
     try {
       await account.deleteSession("current");
+      setUser(null);
+      setUserData({});
     } catch (error) {
       console.log(error);
     }
