@@ -15,9 +15,9 @@ const MainPanel = () => {
           key={item.$id}
         >
           <div>{index + 1}</div>
+          <div>{item.rollNumber}</div>
           <div>{item.$id}</div>
           <div>{item.firstName + " " + item.lastName}</div>
-          <div>00000000</div>
           <div>{item.email}</div>
           <div>{item.phoneNumber}</div>
           <div>0</div>
@@ -26,7 +26,7 @@ const MainPanel = () => {
     });
 
   return (
-    <div className="hidden lg:block col-span-5">
+    <div className="hidden lg:block w-full">
       {!userData.publicKey && (
         <div className="bg-secondary m-2 p-3 border rounded-lg border-border flex justify-between items-center">
           <p className="text-textPrimary">
@@ -51,9 +51,9 @@ const MainPanel = () => {
         <>
           <div className="bg-secondary grid grid-cols-7 m-2 place-items-center font-bold text-textPrimary underline border border-border rounded-t-lg p-3">
             <div>Serial</div>
+            <div>Student Roll Number</div>
             <div>Student UID</div>
             <div>Student Name</div>
-            <div>Student Roll Number</div>
             <div>Student Email</div>
             <div>Student Phone Number</div>
             <div>Total Attendance</div>
@@ -67,3 +67,7 @@ const MainPanel = () => {
 };
 
 export default MainPanel;
+
+
+
+
