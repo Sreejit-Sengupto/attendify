@@ -6,8 +6,8 @@ const Home = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between p-20">
         <div className="md:w-1/2 text-left flex flex-col items-start">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome to Attendify</h1>
-          <p className="text-gray-600 mb-8">
+          <h1 className="text-3xl font-bold text-accent mb-4">Welcome to Attendify</h1>
+          <p className="text-gray-300 mb-8">
             Attendify is your one-stop solution for effortless student attendance management. 
             Our platform leverages the power of QR code technology to make attendance marking 
             quick, secure, and hassle-free. With just a simple scan, attendance is instantly 
@@ -18,7 +18,7 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/register">
                 <button
-                  style={{ backgroundColor: '#dddbff' }}
+                  style={{ backgroundColor: '#fc356c' }}
                   className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
                   Register
@@ -26,7 +26,7 @@ const Home = () => {
               </Link>
               <Link to="/login">
                 <button
-                  style={{ backgroundColor: '#dddbff' }}
+                  style={{ backgroundColor: '#fc356c' }}
                   className="hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
                 >
                   Login

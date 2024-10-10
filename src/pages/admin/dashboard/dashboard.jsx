@@ -21,7 +21,7 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-[100dvh] flex flex-col">
       <TopBar category={"ORG"} />
-      <div className="grid grid-cols-6 h-full">
+      <div className="relative h-full flex w-full">
         <MainPanel />
         <RightPanel />
       </div>

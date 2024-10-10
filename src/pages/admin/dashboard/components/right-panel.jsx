@@ -1,6 +1,9 @@
 import React from "react";
 import { avatars } from "../../../../appwrite/config";
 import { useUserContext } from "../../../../providers/UserProvider";
+import Hamburger from 'hamburger-react'
+import { useState } from "react";
+
 
 import {
   ChevronLeft,
@@ -12,6 +15,7 @@ import {
 } from "lucide-react";
 
 const RightPanel = () => {
+  const [isOpen, setOpen] = useState(false)
   const { userData } = useUserContext();
   const avatar = userData.name && avatars.getInitials(userData.name);
 
@@ -22,15 +26,26 @@ const RightPanel = () => {
 
   return (
     <>
-      <DesktopPanel userData={userData} avatar={avatar} copyOrgId={copyOrgId} />
+      <Hamburger toggled={isOpen} toggle={setOpen} color="#fff" className="z-20" />
+      <div className={`${isOpen ? 'blurred-background' : ''}`}>
+        {isOpen && (
+          <DesktopPanel
+            userData={userData}
+            avatar={avatar}
+            copyOrgId={copyOrgId}
+            className="z-10"
+          />
+        )}
       <MobilePanel userData={userData} avatar={avatar} copyOrgId={copyOrgId} />
+    </div>
     </>
   );
 };
 
+
 const DesktopPanel = ({ userData, avatar, copyOrgId }) => {
   return (
-    <div className="hidden col-span-1 lg:flex flex-col justify-around items-center gap-2 p-5 bg-[#1C1D20] rounded-l-[5rem] font-poppins shadow-2xl border-l border-l-border text-textPrimary">
+    <div className="hidden col-span-1 lg:flex flex-col justify-around items-center gap-2 p-5 bg-[#1C1D20] rounded-tl-[3rem] font-poppins shadow-2xl border-l border-l-border text-textPrimary">
       <div className="flex flex-col gap-1 items-center justify-center">
         <img
           src={avatar}
