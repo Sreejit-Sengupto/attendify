@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
+import { loginWithPasskey } from "../utils/webauthn";
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState(false);
 
-  const { logout } = useUserContext();
+  const { logout, userData } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -36,9 +37,10 @@ const TopBar = ({ category }) => {
       </div>
       <div className="flex justify-center items-center gap-2">
         {category === "ORG" ? (
-          <Link
-            to={"#"}
+          <button
+            // to={"#"}
             className="font-garamond bg-accent text-textPrimary p-3 rounded-md"
+            onClick={() => loginWithPasskey(userData, "ORG")}
           >
             <p>
               <span className="hidden lg:inline">Start Attendance</span>
@@ -46,7 +48,7 @@ const TopBar = ({ category }) => {
                 <CirclePlay />
               </span>
             </p>
-          </Link>
+          </button>
         ) : null}
         <button
           className="bg-primary p-3 rounded-lg text-textPrimary lg:min-w-[100px]"

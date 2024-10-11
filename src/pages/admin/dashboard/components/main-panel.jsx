@@ -1,5 +1,6 @@
 import React from "react";
 import { useUserContext } from "../../../../providers/UserProvider";
+import { registerPasskey } from "../../../../utils/webauthn";
 
 const MainPanel = () => {
   const { userData } = useUserContext();
@@ -33,7 +34,11 @@ const MainPanel = () => {
             Passkey not registered yet! You haven't set up your passkey. Please
             register a passkey to proceed with start taking attendance.
           </p>
-          <button className="bg-accent p-3 rounded-lg text-textPrimary">
+          <button
+            className="bg-accent p-3 rounded-lg text-textPrimary"
+            onClick={() => registerPasskey(userData, "ORG")}
+            disabled={!userData.$id}
+          >
             Register Passkey
           </button>
         </div>
