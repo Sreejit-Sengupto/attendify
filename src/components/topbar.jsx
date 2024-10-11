@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
+import AdminRightPanel from "./right-panel";
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState(false);
@@ -66,6 +67,8 @@ const TopBar = ({ category }) => {
             </p>
           )}
         </button>
+
+        {category === "ORG" && <AdminRightPanel />}
       </div>
     </div>
   );
