@@ -3,7 +3,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
+import AdminRightPanel from "./right-panel";
 import { loginWithPasskey } from "../utils/webauthn";
+
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState({
@@ -85,6 +87,8 @@ const TopBar = ({ category }) => {
             </p>
           )}
         </button>
+
+        {category === "ORG" && <AdminRightPanel />}
       </div>
     </div>
   );
