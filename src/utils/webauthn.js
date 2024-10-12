@@ -2,7 +2,6 @@ import {
   startAuthentication,
   startRegistration,
 } from "@simplewebauthn/browser";
-import { useUserContext } from "../providers/UserProvider";
 
 export const registerPasskey = async (userData, category) => {
   try {
@@ -38,7 +37,7 @@ export const registerPasskey = async (userData, category) => {
 
     console.log(await res.json());
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
@@ -73,7 +72,8 @@ export const loginWithPasskey = async (userData, category) => {
       }
     );
 
-    console.log(await res.json());
+    const result = await res.json();
+    alert(result.message);
   } catch (error) {
     console.log(error);
   }

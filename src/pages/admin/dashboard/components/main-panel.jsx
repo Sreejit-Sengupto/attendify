@@ -1,9 +1,23 @@
 import React from "react";
 import { useUserContext } from "../../../../providers/UserProvider";
 import { registerPasskey } from "../../../../utils/webauthn";
+import { Fingerprint, Loader2 } from "lucide-react";
 
 const MainPanel = () => {
   const { userData } = useUserContext();
+
+  const [loading, setLoading] = React.useState(false);
+
+  const registerOrgPasskey = async () => {
+    try {
+      setLoading(true);
+      await registerPasskey(userData, "ORG");
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const stdData =
     userData.students &&
@@ -28,19 +42,30 @@ const MainPanel = () => {
 
   return (
     <div className="hidden lg:block col-span-5">
-      {!userData.publicKey && (
+      {!userData.passKey && (
         <div className="bg-secondary m-2 p-3 border rounded-lg border-border flex justify-between items-center">
           <p className="text-textPrimary">
             Passkey not registered yet! You haven't set up your passkey. Please
             register a passkey to proceed with start taking attendance.
           </p>
-          <button
-            className="bg-accent p-3 rounded-lg text-textPrimary"
-            onClick={() => registerPasskey(userData, "ORG")}
-            disabled={!userData.$id}
-          >
-            Register Passkey
-          </button>
+          {userData.$id && (
+            <button
+              className="bg-accent p-3 rounded-lg text-textPrimary flex justify-center items-center gap-1 min-w-[200px]"
+              onClick={registerOrgPasskey}
+              disabled={!userData.$id}
+            >
+              {loading ? (
+                <Loader2 className="animate-spin text-textPrimary" />
+              ) : (
+                <>
+                  <span>
+                    <Fingerprint color="white" />
+                  </span>
+                  <span>Register Passkey</span>
+                </>
+              )}
+            </button>
+          )}
         </div>
       )}
       <div className="flex justify-between items-center text-textPrimary px-3 pt-2">
