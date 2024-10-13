@@ -20,7 +20,7 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-[100dvh] flex flex-col">
       <TopBar category={"ORG"} />
-      <div className="relative h-full flex w-full justify-center items-start">
+      <div className="h-full flex w-full justify-center items-start">
         <MainPanel />
       </div>
     </div>

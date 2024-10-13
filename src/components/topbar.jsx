@@ -6,7 +6,6 @@ import { useUserContext } from "../providers/UserProvider";
 import AdminRightPanel from "./right-panel";
 import { loginWithPasskey } from "../utils/webauthn";
 
-
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState({
     logoutBtnLoader: false,
@@ -54,7 +53,7 @@ const TopBar = ({ category }) => {
         {category === "ORG" ? (
           <button
             // to={"#"}
-            className="font-garamond bg-accent text-textPrimary p-3 rounded-md min-w-[150px] flex justify-center items-center"
+            className="font-garamond bg-accent text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center"
             onClick={startAttendance}
           >
             {loading.attBtnLoader ? (
@@ -72,7 +71,7 @@ const TopBar = ({ category }) => {
         <button
           className="bg-primary p-3 rounded-lg text-textPrimary lg:min-w-[100px]"
           onClick={logoutUser}
-          disabled={loading}
+          disabled={loading.logoutBtnLoader}
         >
           {loading.logoutBtnLoader ? (
             <span className="flex justify-center items-center gap-1">

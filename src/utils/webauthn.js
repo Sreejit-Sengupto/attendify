@@ -6,7 +6,7 @@ import {
 export const registerPasskey = async (userData, category) => {
   try {
     const response = await fetch(
-      "http://localhost:3000/api/v1/passkey/register",
+      "https://attendify-server-7g6h.onrender.com/api/v1/passkey/register",
       {
         method: "POST",
         headers: {
@@ -23,17 +23,20 @@ export const registerPasskey = async (userData, category) => {
     const authenticationResult = await startRegistration(options);
     console.log(authenticationResult);
 
-    const res = await fetch("http://localhost:3000/api/v1/passkey/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: userData.$id,
-        credential: authenticationResult,
-        category,
-      }),
-    });
+    const res = await fetch(
+      "https://attendify-server-7g6h.onrender.com/api/v1/passkey/verify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userData.$id,
+          credential: authenticationResult,
+          category,
+        }),
+      }
+    );
 
     console.log(await res.json());
   } catch (error) {
@@ -43,13 +46,16 @@ export const registerPasskey = async (userData, category) => {
 
 export const loginWithPasskey = async (userData, category) => {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/passkey/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: userData.$id, category }),
-    });
+    const response = await fetch(
+      "https://attendify-server-7g6h.onrender.com/api/v1/passkey/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: userData.$id, category }),
+      }
+    );
 
     const challengeResult = await response.json();
     const { options } = challengeResult;
@@ -58,7 +64,7 @@ export const loginWithPasskey = async (userData, category) => {
     const authenticationResult = await startAuthentication(options);
 
     const res = await fetch(
-      "http://localhost:3000/api/v1/passkey/verify-login",
+      "https://attendify-server-7g6h.onrender.com/api/v1/passkey/verify-login",
       {
         method: "POST",
         headers: {
