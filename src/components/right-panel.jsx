@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { avatars } from "../appwrite/config";
 import { useUserContext } from "../providers/UserProvider";
-
 import { KeyRound, Mail, Menu, PhoneCall } from "lucide-react";
-
 import { Button, Drawer } from "@mui/material";
+import UpdateInput from "./updateInput"; 
 
 const AdminRightPanel = () => {
-  const [state, setState] = React.useState(false);
-
+  const [drawerState, setDrawerState] = useState(false);
+  const [modalType, setModalType] = useState(null); 
   const { userData } = useUserContext();
   const avatar = userData.name && avatars.getInitials(userData.name);
 
@@ -17,14 +16,22 @@ const AdminRightPanel = () => {
     alert("Org-ID copied to clipboard");
   };
 
-  const toggleDrawer = () => setState((prev) => !prev);
+  const toggleDrawer = () => setDrawerState((prev) => !prev);
+
+  const openModal = (type) => {
+    setModalType(type); 
+  };
+
+  const closeModal = () => {
+    setModalType(null); 
+  };
 
   return (
     <>
       <Button onClick={toggleDrawer}>
         <Menu color="#FC356C" size={30} />
       </Button>
-      <Drawer anchor="right" open={state} onClose={toggleDrawer}>
+      <Drawer anchor="right" open={drawerState} onClose={toggleDrawer}>
         <div className="w-[350px] flex flex-col justify-around items-center gap-2 p-5 bg-[#1C1D20] font-poppins shadow-2xl border-l border-l-border text-textPrimary h-full">
           <div className="flex flex-col gap-1 items-center justify-center">
             <img
@@ -66,20 +73,39 @@ const AdminRightPanel = () => {
           </div>
 
           <div className="flex flex-col justify-center items-start gap-1">
-            <button className="bg-accent p-3 rounded-t-lg text-textPrimary min-w-[220px]">
+            <button
+              className="bg-accent p-3 rounded-t-lg text-textPrimary min-w-[220px]"
+              onClick={() => openModal("email")} 
+            >
               Update Email
             </button>
-            <button className="bg-accent p-3 text-textPrimary min-w-[220px]">
+            <button
+              className="bg-accent p-3 text-textPrimary min-w-[220px]"
+              onClick={() => openModal("phoneNumber")}
+            >
               Update Phone Number
             </button>
-            <button className="bg-accent p-3 rounded-b-lg text-textPrimary min-w-[220px]">
+            <button
+              className="bg-accent p-3 rounded-b-lg text-textPrimary min-w-[220px]"
+              onClick={() => openModal("password")}
+            >
               Change Password
             </button>
           </div>
         </div>
       </Drawer>
+
+      {modalType && (
+        <UpdateInput
+          type={modalType} 
+          open={!!modalType} 
+          handleClose={closeModal} 
+          userData={userData} 
+        />
+      )}
     </>
   );
 };
 
 export default AdminRightPanel;
+
