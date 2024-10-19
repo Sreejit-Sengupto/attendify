@@ -31,7 +31,9 @@ const LoginForm = () => {
 
       console.log("Logging in...");
       await login(formData.email, formData.password);
-      navigate(`/admin/dashboard/${validUser.documents[0].$id}`);
+      navigate(`/admin/dashboard/${validUser.documents[0].$id}`, {
+        replace: true,
+      });
       console.log("Login successfull");
     } catch (error) {
       console.log(error);
@@ -70,7 +72,7 @@ const LoginForm = () => {
 
       console.log("Logging in...");
       await login(formData.email, formData.password);
-      navigate(`/dashboard/${validUser.documents[0].$id}`);
+      navigate(`/dashboard/${validUser.documents[0].$id}`, { replace: true });
       console.log("Login successfull");
     } catch (error) {
       console.log(error);

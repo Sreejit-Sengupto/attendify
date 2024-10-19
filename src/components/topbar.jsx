@@ -1,6 +1,6 @@
 import { CirclePlay, Loader2, LogOut } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
 import AdminRightPanel from "./right-panel";
@@ -12,14 +12,25 @@ const TopBar = ({ category }) => {
     attBtnLoader: false,
   });
 
-  const { logout, userData } = useUserContext();
+  const params = useParams();
+  // console.log(params);
+
+  const { logout, userData, setPasskeyVerified } = useUserContext();
 
   const navigate = useNavigate();
 
   const startAttendance = async () => {
     try {
       setLoading({ attBtnLoader: true });
-      await loginWithPasskey(userData, "ORG");
+      const verificationResult = await loginWithPasskey(userData, "ORG");
+      if (verificationResult) {
+        setPasskeyVerified(true);
+        navigate(`/admin/dashboard/${params.userId}/mark-attendance`, {
+          replace: true,
+        });
+      } else {
+        alert("Verification failed..");
+      }
     } catch (error) {
       alert(error.message);
     } finally {
@@ -52,7 +63,7 @@ const TopBar = ({ category }) => {
       <div className="flex justify-center items-center gap-2">
         {category === "ORG" ? (
           <button
-            // to={"#"}
+            // to={`/admin/dashboard/${params.userId}/mark-attendance`}
             className="font-garamond bg-accent text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center"
             onClick={startAttendance}
           >
@@ -66,6 +77,7 @@ const TopBar = ({ category }) => {
                 </span>
               </>
             )}
+            {/* Start Attendance */}
           </button>
         ) : null}
         <button

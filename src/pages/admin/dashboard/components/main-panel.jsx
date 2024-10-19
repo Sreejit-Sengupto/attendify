@@ -36,7 +36,7 @@ const MainPanel = () => {
         name: item.firstName + " " + item.lastName,
         email: item.email,
         phno: item.phoneNumber,
-        att: 0,
+        att: item.attendance,
       };
     });
 
