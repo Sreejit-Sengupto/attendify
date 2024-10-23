@@ -1,10 +1,10 @@
-import { CirclePlay, Loader2, LogOut } from "lucide-react";
+import { Loader2, LogIn, LogOut } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
 import AdminRightPanel from "./right-panel";
-import { loginWithPasskey } from "../utils/webauthn";
+import { databases } from "../appwrite/config";
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState({
@@ -12,14 +12,45 @@ const TopBar = ({ category }) => {
     attBtnLoader: false,
   });
 
+  const params = useParams();
+
   const { logout, userData } = useUserContext();
 
   const navigate = useNavigate();
 
-  const startAttendance = async () => {
+  const startAttendance = async (type) => {
     try {
       setLoading({ attBtnLoader: true });
-      await loginWithPasskey(userData, "ORG");
+
+      // Get expiry from session storage
+      let expiryTime = sessionStorage.getItem("expiry");
+      console.log(Date.now() < expiryTime);
+      console.log(expiryTime);
+
+      if (expiryTime) {
+        if (Date.now() < expiryTime) {
+          alert("A session is already active");
+          navigate(`/admin/dashboard/${params.userId}/mark-attendance`);
+          return;
+        }
+      }
+
+      // If it doesn't exists create a new one
+      if (!expiryTime || Date.now() > expiryTime) {
+        console.log("I'm in");
+
+        expiryTime = Date.now() + 60 * 60 * 1000;
+        sessionStorage.setItem("expiry", expiryTime);
+        await databases.updateDocument(
+          import.meta.env.VITE_APPWRITE_DB_ID,
+          import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
+          userData.$id,
+          {
+            classes: userData.classes + 1,
+          }
+        );
+        navigate(`/admin/dashboard/${params.userId}/mark-attendance`);
+      }
     } catch (error) {
       alert(error.message);
     } finally {
@@ -52,9 +83,9 @@ const TopBar = ({ category }) => {
       <div className="flex justify-center items-center gap-2">
         {category === "ORG" ? (
           <button
-            // to={"#"}
+            // to={`/admin/dashboard/${params.userId}/mark-attendance`}
             className="font-garamond bg-accent text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center"
-            onClick={startAttendance}
+            onClick={() => startAttendance("check-in")}
           >
             {loading.attBtnLoader ? (
               <Loader2 className="animate-spin text-textPrimary" />
@@ -62,12 +93,13 @@ const TopBar = ({ category }) => {
               <>
                 <span className="hidden lg:inline">Start Attendance</span>
                 <span className="lg:hidden">
-                  <CirclePlay />
+                  <LogIn />
                 </span>
               </>
             )}
           </button>
         ) : null}
+
         <button
           className="bg-primary p-3 rounded-lg text-textPrimary lg:min-w-[100px]"
           onClick={logoutUser}

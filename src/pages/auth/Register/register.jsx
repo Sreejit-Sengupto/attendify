@@ -40,7 +40,7 @@ const RegisterForm = () => {
 
       await login(formData.email, formData.password);
 
-      navigate(`/admin/dashboard/${newOrg.$id}`);
+      navigate(`/admin/dashboard/${newOrg.$id}`, { replace: true });
 
       console.log("Registered successfully!!");
     } catch (error) {
@@ -99,7 +99,7 @@ const RegisterForm = () => {
 
       await login(formData.email, formData.password);
 
-      navigate(`/dashboard/${newStd.$id}`);
+      navigate(`/dashboard/${newStd.$id}`, { replace: true });
 
       console.log("Registered successfully!!");
     } catch (error) {
