@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useInputForm } from "../../../providers/InputFormProvider";
 import { databases } from "../../../appwrite/config";
 import { Query } from "appwrite";
+import { loginWithPasskey } from "../../../utils/webauthn";
 
 const LoginForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
@@ -26,6 +27,12 @@ const LoginForm = () => {
 
       if (validUser.total === 0) {
         alert("Invalid user, please check your email");
+        return;
+      }
+
+      const webauthnRes = await loginWithPasskey(validUser.documents[0], "ORG");
+      if (!webauthnRes) {
+        alert("Verification Failed");
         return;
       }
 

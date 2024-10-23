@@ -3,7 +3,6 @@ import { useUserContext } from "../../../providers/UserProvider";
 import { useParams } from "react-router-dom";
 import TopBar from "../../../components/topbar";
 import MainPanel from "./components/main-panel";
-import { Outlet } from "react-router-dom";
 
 const DashboardPage = () => {
   const { getUserData } = useUserContext();
@@ -24,7 +23,6 @@ const DashboardPage = () => {
       <div className="h-full flex w-full justify-center items-start">
         <MainPanel />
       </div>
-      {/* <Outlet /> */}
     </div>
   );
 };

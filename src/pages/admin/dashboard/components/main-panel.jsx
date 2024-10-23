@@ -29,6 +29,14 @@ const MainPanel = () => {
   const rows =
     userData.students &&
     userData.students.map((item, index) => {
+      const parsedAtt = JSON.parse(item.attendance);
+
+      const totalAtt =
+        (parsedAtt &&
+          parsedAtt[userData.$id] &&
+          parsedAtt[userData.$id].total) ||
+        0;
+
       return {
         id: index + 1,
         rollno: item.rollNumber,
@@ -36,7 +44,7 @@ const MainPanel = () => {
         name: item.firstName + " " + item.lastName,
         email: item.email,
         phno: item.phoneNumber,
-        att: item.attendance,
+        att: totalAtt,
       };
     });
 
@@ -101,9 +109,14 @@ const MainPanel = () => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <h1 className="font-semibold text-xl  p-3 text-textPrimary">
-        Registered Students
-      </h1>
+      <div className="flex justify-between items-center gap-3">
+        <h1 className="font-semibold text-xl  p-3 text-textPrimary">
+          Registered Students
+        </h1>
+        <p className="font-semibold text-xl  p-3 text-textPrimary">
+          Total Classes: {userData.classes}
+        </p>
+      </div>
       <PasskeyNotification
         userData={userData}
         category={"ORG"}
