@@ -193,7 +193,7 @@ const Home = () => {
                   className="block w-full bg-transparent border border-border text-[#E5E5E7] hover:bg-[#1C1D20] rounded-lg p-3"
                   variant="outline"
                   size="lg"
-                  to="mailto:sreesen03@gmail.com"
+                  to="mailto:sreesen2003@gmail.com"
                 >
                   Contact the Team
                 </Link>
