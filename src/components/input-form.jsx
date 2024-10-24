@@ -98,6 +98,19 @@ const InputForm = ({ type, category, formHandler }) => {
                 className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
               />
             </div>
+
+            <div className="flex flex-col text-textPrimary">
+              <label htmlFor="">Institue Roll Number</label>
+              <input
+                type="text"
+                name="rollNo"
+                value={formData.rollNo}
+                onChange={handleChange}
+                required
+                placeholder="Enter the roll number provided by your Institue"
+                className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
+              />
+            </div>
           </>
         )}
 

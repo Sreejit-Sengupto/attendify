@@ -19,7 +19,7 @@ const RegisterForm = () => {
     try {
       e.preventDefault();
       console.log("Registering...");
-      await register(formData.name, formData.email, formData.password);
+      await register(formData.name, formData.email, formData.password, "ORG");
 
       const dbData = {
         name: formData.name,
@@ -78,7 +78,12 @@ const RegisterForm = () => {
         return;
       }
 
-      await register(formData.firstName, formData.email, formData.password);
+      await register(
+        formData.firstName,
+        formData.email,
+        formData.password,
+        "STD"
+      );
 
       // check if org exists
 
@@ -88,6 +93,7 @@ const RegisterForm = () => {
         email: formData.email,
         phoneNumber: formData.mobileNumber,
         organisation: [formData.orgCode],
+        rollNumber: formData.rollNo,
       };
 
       const newStd = await databases.createDocument(
