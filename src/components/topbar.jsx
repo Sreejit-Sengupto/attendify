@@ -18,9 +18,14 @@ const TopBar = ({ category }) => {
 
   const navigate = useNavigate();
 
-  const startAttendance = async (type) => {
+  const startAttendance = async () => {
     try {
       setLoading({ attBtnLoader: true });
+
+      if (!userData.passKey) {
+        alert("You have not registered your passkey yet!");
+        return;
+      }
 
       // Get expiry from session storage
       let expiryTime = sessionStorage.getItem("expiry");
@@ -85,7 +90,7 @@ const TopBar = ({ category }) => {
           <button
             // to={`/admin/dashboard/${params.userId}/mark-attendance`}
             className="font-garamond bg-accent text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center"
-            onClick={() => startAttendance("check-in")}
+            onClick={startAttendance}
           >
             {loading.attBtnLoader ? (
               <Loader2 className="animate-spin text-textPrimary" />
