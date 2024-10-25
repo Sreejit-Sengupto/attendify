@@ -15,10 +15,8 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
-  const loginOrg = async (e) => {
+  const loginOrg = async () => {
     try {
-      e.preventDefault();
-
       const validUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
@@ -67,10 +65,8 @@ const LoginForm = () => {
     }
   };
 
-  const loginStudent = async (e) => {
+  const loginStudent = async () => {
     try {
-      e.preventDefault();
-
       const validUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
