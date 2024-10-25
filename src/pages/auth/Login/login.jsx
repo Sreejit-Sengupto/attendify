@@ -30,10 +30,15 @@ const LoginForm = () => {
         return;
       }
 
-      const webauthnRes = await loginWithPasskey(validUser.documents[0], "ORG");
-      if (!webauthnRes) {
-        alert("Verification Failed");
-        return;
+      if (validUser.documents[0].passKey) {
+        const webauthnRes = await loginWithPasskey(
+          validUser.documents[0],
+          "ORG"
+        );
+        if (!webauthnRes) {
+          alert("Verification Failed");
+          return;
+        }
       }
 
       console.log("Logging in...");
