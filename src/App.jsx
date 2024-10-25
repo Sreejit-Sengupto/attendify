@@ -12,6 +12,7 @@ import EmailVerification from "./pages/email-verification";
 import { UserProvider } from "./providers/UserProvider";
 import Dashboard from "./pages/dashboard";
 import AdminDashboard from "./pages/admin/dashboard";
+import AttendancePage from "./pages/admin/attendance";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,11 @@ const router = createBrowserRouter(
       <Route path="/verify-email" element={<EmailVerification />} />
       <Route path="/dashboard/:userId" element={<Dashboard />} />
       <Route path="/admin/dashboard/:userId" element={<AdminDashboard />} />
+
+      <Route
+        path="/admin/dashboard/:userId/mark-attendance"
+        element={<AttendancePage />}
+      />
     </>
   )
 );

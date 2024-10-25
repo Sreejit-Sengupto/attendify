@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
   const [userData, setUserData] = React.useState({});
+  const [passkeyVerified, setPasskeyVerified] = React.useState(false);
 
   React.useEffect(() => {
     getUser();
@@ -68,6 +69,8 @@ export const UserProvider = ({ children }) => {
     setUserData,
     getUserData,
     getUser,
+    passkeyVerified,
+    setPasskeyVerified,
     login,
     logout,
     testData: "Hello",
