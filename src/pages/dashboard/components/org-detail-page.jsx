@@ -23,6 +23,7 @@ const OrgDetail = () => {
 
   const [loading, setLoading] = React.useState(false);
   const [orgData, setOrgData] = React.useState({});
+  console.log(orgData);
 
   const fetchOrgDetails = async () => {
     try {
@@ -30,7 +31,7 @@ const OrgDetail = () => {
       const result = await databases.getDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
-        params.orgId
+        params.org
       );
 
       setOrgData(result);
@@ -51,10 +52,17 @@ const OrgDetail = () => {
     userData && userData.attendance && JSON.parse(userData.attendance);
   // const att = orgData.attendance && parsedAtt[orgData.$id].total;
   const att = React.useCallback(() => {
-    return parsedAtt && parsedAtt[orgData.$id] && parsedAtt[orgData.$id].total;
+    return parsedAtt && parsedAtt[orgData.$id] && parsedAtt[orgData.$id].total
+      ? parsedAtt[orgData.$id].total
+      : 0;
   }, [orgData]);
 
-  const percentage = (att() / orgData.classes) * 100;
+  const percentage = React.useCallback(() => {
+    return orgData.classes <= 0 ? 0 : (att() / orgData.classes) * 100;
+  }, [orgData]);
+
+  const attDisplay = att();
+  const percentageDisplay = percentage();
 
   return (
     <div className="h-[100dvh] flex flex-col justify-center items-center gap-3 text-textPrimary">
@@ -89,7 +97,7 @@ const OrgDetail = () => {
                   <Signature color="#FC356C" />
                   Total Attendance
                 </span>
-                <span>{att()}</span>
+                <span>{attDisplay}</span>
               </p>
               <p className="flex items-center justify-between">
                 <span className="flex justify-center items-center gap-1">
@@ -98,10 +106,12 @@ const OrgDetail = () => {
                 </span>
                 <span
                   className={
-                    percentage < 75 ? "text-red-500" : "text-green-500"
+                    percentageDisplay < 75 ? "text-red-500" : "text-green-500"
                   }
                 >
-                  {percentage} %
+                  {orgData.classes <= 0
+                    ? "No classes yet"
+                    : `${percentageDisplay}%`}
                 </span>
               </p>
             </CustomFieldset>
