@@ -41,7 +41,7 @@ const AdminRightPanel = () => {
 
           <div className="flex flex-col justify-center items-start gap-4 my-5">
             <button
-              className="flex justify-center items-center gap-1 bg-accent text-textPrimary p-3 rounded-lg"
+              className="flex justify-center items-center gap-1 bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-lg"
               onClick={copyOrgId}
             >
               <span>
@@ -66,13 +66,13 @@ const AdminRightPanel = () => {
           </div>
 
           <div className="flex flex-col justify-center items-start gap-1">
-            <button className="bg-accent p-3 rounded-t-lg text-textPrimary min-w-[220px]">
+            <button className="bg-accent hover:bg-accent/90 p-3 rounded-t-lg text-textPrimary min-w-[220px]">
               Update Email
             </button>
-            <button className="bg-accent p-3 text-textPrimary min-w-[220px]">
+            <button className="bg-accent hover:bg-accent/90 p-3 text-textPrimary min-w-[220px]">
               Update Phone Number
             </button>
-            <button className="bg-accent p-3 rounded-b-lg text-textPrimary min-w-[220px]">
+            <button className="bg-accent hover:bg-accent/90 p-3 rounded-b-lg text-textPrimary min-w-[220px]">
               Change Password
             </button>
           </div>

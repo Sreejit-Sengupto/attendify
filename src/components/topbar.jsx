@@ -89,8 +89,9 @@ const TopBar = ({ category }) => {
         {category === "ORG" ? (
           <button
             // to={`/admin/dashboard/${params.userId}/mark-attendance`}
-            className="font-garamond bg-accent text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center"
+            className="font-garamond bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center disabled:hover:bg-accent/80"
             onClick={startAttendance}
+            disabled={loading.attBtnLoader}
           >
             {loading.attBtnLoader ? (
               <Loader2 className="animate-spin text-textPrimary" />
@@ -106,7 +107,7 @@ const TopBar = ({ category }) => {
         ) : null}
 
         <button
-          className="bg-primary p-3 rounded-lg text-textPrimary lg:min-w-[100px]"
+          className="bg-primary hover:bg-[#1C1D20] p-3 rounded-lg text-textPrimary lg:min-w-[100px] border border-border"
           onClick={logoutUser}
           disabled={loading.logoutBtnLoader}
         >

@@ -15,9 +15,8 @@ const RegisterForm = () => {
 
   const navigate = useNavigate();
 
-  const registerOrg = async (e) => {
+  const registerOrg = async () => {
     try {
-      e.preventDefault();
       console.log("Registering...");
       await register(formData.name, formData.email, formData.password, "ORG");
 
@@ -63,9 +62,8 @@ const RegisterForm = () => {
     }
   };
 
-  const registerStudent = async (e) => {
+  const registerStudent = async () => {
     try {
-      e.preventDefault();
       console.log("Registering...");
       const org = await databases.getDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
