@@ -13,6 +13,8 @@ import { UserProvider } from "./providers/UserProvider";
 import Dashboard from "./pages/dashboard";
 import AdminDashboard from "./pages/admin/dashboard";
 import AttendancePage from "./pages/admin/attendance";
+import MainPanel from "./pages/dashboard/components/main-panel";
+import OrgDetail from "./pages/dashboard/components/org-detail-page";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,7 +24,10 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/verify-email" element={<EmailVerification />} />
       <Route path="/dashboard/:userId" element={<Dashboard />} />
-      <Route path="/admin/dashboard/:userId" element={<AdminDashboard />} />
+      <Route path="/admin/dashboard/:userId" element={<AdminDashboard />}>
+        <Route index element={<MainPanel />} />
+        <Route path=":org" element={<OrgDetail />} />
+      </Route>
 
       <Route
         path="/admin/dashboard/:userId/mark-attendance"
