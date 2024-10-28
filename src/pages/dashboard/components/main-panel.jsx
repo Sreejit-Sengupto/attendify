@@ -7,7 +7,7 @@ import PasskeyNotification from "../../../components/passkey-notification";
 import { registerPasskey } from "../../../utils/webauthn";
 
 const MainPanel = () => {
-  const { userData, getUserData } = useUserContext();
+  const { userData } = useUserContext();
   const [loading, setLoading] = React.useState(false);
 
   const registerStdPasskey = async () => {

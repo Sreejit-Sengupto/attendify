@@ -48,7 +48,7 @@ const AdminRightPanel = () => {
 
           <div className="flex flex-col justify-center items-start gap-4 my-5">
             <button
-              className="flex justify-center items-center gap-1 bg-accent text-textPrimary p-3 rounded-lg"
+              className="flex justify-center items-center gap-1 bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-lg"
               onClick={copyOrgId}
             >
               <span>

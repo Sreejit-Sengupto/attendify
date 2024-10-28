@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useInputForm } from "../../../providers/InputFormProvider";
 import { databases } from "../../../appwrite/config";
 import { Query } from "appwrite";
+import { loginWithPasskey } from "../../../utils/webauthn";
 
 const LoginForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
@@ -14,10 +15,8 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
-  const loginOrg = async (e) => {
+  const loginOrg = async () => {
     try {
-      e.preventDefault();
-
       const validUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
@@ -29,9 +28,22 @@ const LoginForm = () => {
         return;
       }
 
+      if (validUser.documents[0].passKey) {
+        const webauthnRes = await loginWithPasskey(
+          validUser.documents[0],
+          "ORG"
+        );
+        if (!webauthnRes) {
+          alert("Verification Failed");
+          return;
+        }
+      }
+
       console.log("Logging in...");
       await login(formData.email, formData.password);
-      navigate(`/admin/dashboard/${validUser.documents[0].$id}`);
+      navigate(`/admin/dashboard/${validUser.documents[0].$id}`, {
+        replace: true,
+      });
       console.log("Login successfull");
     } catch (error) {
       console.log(error);
@@ -53,10 +65,8 @@ const LoginForm = () => {
     }
   };
 
-  const loginStudent = async (e) => {
+  const loginStudent = async () => {
     try {
-      e.preventDefault();
-
       const validUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
@@ -70,7 +80,7 @@ const LoginForm = () => {
 
       console.log("Logging in...");
       await login(formData.email, formData.password);
-      navigate(`/dashboard/${validUser.documents[0].$id}`);
+      navigate(`/dashboard/${validUser.documents[0].$id}`, { replace: true });
       console.log("Login successfull");
     } catch (error) {
       console.log(error);

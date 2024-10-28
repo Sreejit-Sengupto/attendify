@@ -11,6 +11,7 @@ export const InputFormProvider = ({ children }) => {
     firstName: "",
     lastName: "",
     orgCode: "",
+    rollNo: "",
     line1: "",
     line2: "",
     city: "",
