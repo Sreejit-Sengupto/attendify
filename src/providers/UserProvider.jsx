@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { account, databases } from "../appwrite/config";
 import { Loader2 } from "lucide-react";
+import { toast } from "react-toastify";
 
 const UserContext = createContext();
 
@@ -15,11 +16,20 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const getUser = async () => {
+    const loadingToastId = toast.loading("Fetching user details...",{
+      style: {
+        backgroundColor: "#fc356c",
+        color: "#fff"
+      }
+    });
     try {
       const loggedInUser = await account.get();
       setUser(loggedInUser);
+      toast.dismiss(loadingToastId);
+      toast.success("User details fetched successfully!");
     } catch (error) {
-      console.log(error);
+      toast.dismiss(loadingToastId);
+      console.log(error.message);
     } finally {
       setLoading(false);
     }
@@ -33,13 +43,20 @@ export const UserProvider = ({ children }) => {
       setUser(loggedInUser);
 
       if (!loggedInUser.emailVerification) {
-        console.log("Sending verification mail...");
+        const loadingToastId = toast.loading("Sending verficiation mail...",{
+          style: {
+            backgroundColor: "#fc356c",
+            color: "#fff"   
+          }
+        });
         await account.createVerification(
           "http://attendifyapp.vercel.app/verify-email"
         );
+        toast.dismiss(loadingToastId);
+        toast.success("Verification mail sent successfully");
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 

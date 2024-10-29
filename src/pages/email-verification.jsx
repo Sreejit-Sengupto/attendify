@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { account } from "../appwrite/config";
 import { CheckCircle, CircleX, Loader } from "lucide-react";
+import { toast } from 'react-toastify';
 
 const EmailVerification = () => {
   const [queryParams, setQueryParams] = useSearchParams();
@@ -15,13 +16,13 @@ const EmailVerification = () => {
 
       const result = await account.updateVerification(userId, secret);
 
-      console.log("Verification successfull!", result);
+      toast.success("Verification successfull!", result);
 
       if (result) {
         setVerified(true);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
       setErr(true);
     }
   };

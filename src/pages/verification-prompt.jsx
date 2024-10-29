@@ -1,12 +1,13 @@
 import { MailCheck } from "lucide-react";
 import React from "react";
+import { toast } from 'react-toastify';
 
 const VerificationPrompt = () => {
   const [btnDisabled, setBtnDisabled] = React.useState(false);
 
   const resendVerificationMail = () => {
     setBtnDisabled(true);
-    console.log("Mail sent");
+    toast.success("Mail sent");
   };
 
   React.useEffect(() => {

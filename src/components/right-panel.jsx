@@ -4,6 +4,8 @@ import { useUserContext } from "../providers/UserProvider";
 import { KeyRound, Mail, Menu, PhoneCall } from "lucide-react";
 import { Button, Drawer } from "@mui/material";
 import UpdateInput from "./updateInput";
+import { toast } from "react-toastify";
+
 
 const RightPanel = ({ category }) => {
   const [drawerState, setDrawerState] = useState(false);
@@ -17,7 +19,7 @@ const RightPanel = ({ category }) => {
 
   const copyId = () => {
     navigator.clipboard.writeText(userData.$id);
-    alert("Org-ID copied to clipboard");
+    toast.info("Org-ID copied to clipboard");
   };
 
   const toggleDrawer = () => setDrawerState((prev) => !prev);

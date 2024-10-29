@@ -4,7 +4,9 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-
+import { ToastContainer, Zoom } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
+import './index.css';
 import Home from "./pages/home";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
@@ -41,6 +43,17 @@ const App = () => {
   return (
     <UserProvider>
       <RouterProvider router={router} />
+      <ToastContainer position="top-center"
+                      autoClose={2000}
+                      hideProgressBar={true}
+                      newestOnTop={true}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme= "colored"
+                      transition={Zoom} />
     </UserProvider>
   );
 };

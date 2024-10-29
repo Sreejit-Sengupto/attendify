@@ -6,6 +6,7 @@ import { useInputForm } from "../../../providers/InputFormProvider";
 import { databases } from "../../../appwrite/config";
 import { Query } from "appwrite";
 import { loginWithPasskey } from "../../../utils/webauthn";
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
@@ -16,6 +17,12 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const loginOrg = async () => {
+    const loadingToastId = toast.loading("Logging in...",{
+      style: {
+        backgroundColor: "#fc356c",
+        color: "#fff"   
+      }
+    });
     try {
       const validUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
@@ -24,7 +31,8 @@ const LoginForm = () => {
       );
 
       if (validUser.total === 0) {
-        alert("Invalid user, please check your email");
+        toast.dismiss(loadingToastId);
+        toast.error("Invalid user, please check your email");
         return;
       }
 
@@ -34,19 +42,22 @@ const LoginForm = () => {
           "ORG"
         );
         if (!webauthnRes) {
-          alert("Verification Failed");
+          toast.dismiss(loadingToastId);
+          toast.error("Verification Failed");
           return;
         }
       }
 
-      console.log("Logging in...");
       await login(formData.email, formData.password);
       navigate(`/admin/dashboard/${validUser.documents[0].$id}`, {
         replace: true,
       });
-      console.log("Login successfull");
+      toast.dismiss(loadingToastId);
+      toast.success("Login successfull");
+
     } catch (error) {
-      console.log(error);
+      toast.dismiss(loadingToastId);
+      toast.error(error.message);
     } finally {
       setFormData({
         name: "",
@@ -66,6 +77,12 @@ const LoginForm = () => {
   };
 
   const loginStudent = async () => {
+    const loadingToastId = toast.loading("Logging in...",{
+      style: {
+        backgroundColor: "#fc356c",
+        color: "#fff"   
+      }
+    });
     try {
       const validUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
@@ -74,16 +91,19 @@ const LoginForm = () => {
       );
 
       if (validUser.total === 0) {
-        alert("Invalid user, please check your email");
+        toast.dismiss(loadingToastId);
+        toast.error("Invalid user, please check your email");
         return;
       }
 
-      console.log("Logging in...");
       await login(formData.email, formData.password);
       navigate(`/dashboard/${validUser.documents[0].$id}`, { replace: true });
-      console.log("Login successfull");
+
+      toast.dismiss(loadingToastId);
+      toast.success("Login successfull");
     } catch (error) {
-      console.log(error);
+      toast.dismiss(loadingToastId);
+      toast.error(error.message);
     } finally {
       setFormData({
         name: "",
