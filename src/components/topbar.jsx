@@ -1,4 +1,4 @@
-import { Loader2, LogIn, LogOut } from "lucide-react";
+import { Loader2, LogIn, LogOut, Plus } from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
@@ -6,12 +6,15 @@ import { useUserContext } from "../providers/UserProvider";
 import AdminRightPanel from "./right-panel";
 import { databases } from "../appwrite/config";
 import { toast } from "react-toastify";
+import CustomModal from "./custom-modal";
+
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState({
     logoutBtnLoader: false,
     attBtnLoader: false,
   });
+  const [openModal, setOpenModal] = React.useState(false);
 
   const params = useParams();
 
@@ -68,6 +71,34 @@ const TopBar = ({ category }) => {
     }
   };
 
+  const addNewInstitute = async (newOrgId) => {
+    try {
+      const orgExists = userData.organisation.some(
+        (item) => item.$id === newOrgId
+      );
+      if (orgExists) {
+        alert("Already added");
+        return;
+      }
+      console.log("Adding...");
+
+      await databases.updateDocument(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
+        userData.$id,
+        {
+          organisation: [...userData.organisation, newOrgId],
+        }
+      );
+
+      console.log("Added");
+      window.location.reload();
+      navigate(`/dashboard/${userData.$id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const logoutUser = async () => {
     try {
       setLoading({ logoutBtnLoader: true });
@@ -79,6 +110,7 @@ const TopBar = ({ category }) => {
       setLoading({ logoutBtnLoader: false });
     }
   };
+
   return (
     <div className="flex justify-between items-center p-2 border-b border-b-border bg-primary">
       <div className="flex justify-center items-center gap-1">
@@ -91,25 +123,26 @@ const TopBar = ({ category }) => {
         <p className="font-bold lg:text-xl text-textPrimary">Attendify</p>
       </div>
       <div className="flex justify-center items-center gap-2">
-        {category === "ORG" ? (
-          <button
-            // to={`/admin/dashboard/${params.userId}/mark-attendance`}
-            className="font-garamond bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center disabled:hover:bg-accent/80"
-            onClick={startAttendance}
-            disabled={loading.attBtnLoader}
-          >
-            {loading.attBtnLoader ? (
-              <Loader2 className="animate-spin text-textPrimary" />
-            ) : (
-              <>
-                <span className="hidden lg:inline">Start Attendance</span>
-                <span className="lg:hidden">
-                  <LogIn />
-                </span>
-              </>
-            )}
-          </button>
-        ) : null}
+        <button
+          className="font-garamond bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center disabled:hover:bg-accent/80"
+          onClick={
+            category === "ORG" ? startAttendance : () => setOpenModal(true)
+          }
+          disabled={loading.attBtnLoader}
+        >
+          {loading.attBtnLoader ? (
+            <Loader2 className="animate-spin text-textPrimary" />
+          ) : (
+            <>
+              <span className="hidden lg:inline">
+                {category === "ORG" ? "Start Attendance" : "Add Institute"}
+              </span>
+              <span className="lg:hidden">
+                {category === "ORG" ? <LogIn /> : <Plus />}
+              </span>
+            </>
+          )}
+        </button>
 
         <button
           className="bg-primary hover:bg-[#1C1D20] p-3 rounded-lg text-textPrimary lg:min-w-[100px] border border-border"
@@ -132,6 +165,12 @@ const TopBar = ({ category }) => {
 
         {category === "ORG" && <AdminRightPanel />}
       </div>
+
+      <CustomModal
+        open={openModal}
+        handleClose={() => setOpenModal(false)}
+        actionHandler={addNewInstitute}
+      />
     </div>
   );
 };

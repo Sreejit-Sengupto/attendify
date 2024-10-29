@@ -1,6 +1,6 @@
 import React from "react";
 import { useUserContext } from "../../providers/UserProvider";
-import { useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import TopBar from "../../components/topbar";
 import MainPanel from "./components/main-panel";
 
@@ -20,9 +20,10 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-[100dvh] flex flex-col">
       <TopBar />
-      <div className="h-full">
+      {/* <div className="h-full">
         <MainPanel />
-      </div>
+      </div> */}
+      <Outlet />
     </div>
   );
 };

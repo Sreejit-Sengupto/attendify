@@ -34,6 +34,7 @@ Install the project with npm
   cd attendify
   npm install
 ```
+- You will also require the server, get it from [here](https://github.com/Sreejit-Sengupto/attendify-server).
 - Create an Appwrite account and create a database with two collections namely, 'organisations' and 'students' with the following attributes:
  
  #### organisations

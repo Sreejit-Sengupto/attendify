@@ -48,7 +48,7 @@ const MainPanel = () => {
       <h1 className="text-2xl text-textPrimary font-medium">
         Your Organisations
       </h1>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
         {organisations}
       </div>
     </div>
@@ -94,7 +94,7 @@ const OrgDetailCard = ({ orgName, orgCode, orgCity, orgEmail, orgPhone }) => {
         </p>
       </div>
       <Link
-        to={"#"}
+        to={orgCode}
         className="bg-accent p-3 rounded-lg text-textPrimary w-full text-center mt-auto"
       >
         Show Details
