@@ -17,6 +17,9 @@ import AdminDashboard from "./pages/admin/dashboard";
 import AttendancePage from "./pages/admin/attendance";
 import MainPanel from "./pages/dashboard/components/main-panel";
 import OrgDetail from "./pages/dashboard/components/org-detail-page";
+import PasswordRecoveryPage from "./pages/password-recovery";
+import NewPasswordPage from "./pages/password-recovery/new-password";
+import ProtectAuth from "./pages/protect-auth";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,11 +32,21 @@ const router = createBrowserRouter(
         <Route index element={<MainPanel />} />
         <Route path=":org" element={<OrgDetail />} />
       </Route>
-      <Route path="/admin/dashboard/:userId" element={<AdminDashboard />} />
 
+      <Route path="/admin/dashboard/:userId" element={<AdminDashboard />} />
       <Route
         path="/admin/dashboard/:userId/mark-attendance"
         element={<AttendancePage />}
+      />
+
+      <Route path="/recover-password" element={<PasswordRecoveryPage />} />
+      <Route
+        path="/new-password"
+        element={
+          <ProtectAuth>
+            <NewPasswordPage />
+          </ProtectAuth>
+        }
       />
     </>
   )
