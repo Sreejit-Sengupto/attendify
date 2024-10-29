@@ -6,6 +6,7 @@ import { databases } from "../../../appwrite/config";
 import { ID } from "appwrite";
 import { useUserContext } from "../../../providers/UserProvider";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
   const [category, setCategory] = React.useState("STUDENT");
@@ -16,8 +17,13 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const registerOrg = async () => {
+    const loadingToastId = toast.loading("Registering...",{
+      style: {
+        backgroundColor: "#fc356c",
+        color: "#fff"   
+      }
+    });
     try {
-      console.log("Registering...");
       await register(formData.name, formData.email, formData.password, "ORG");
 
       const dbData = {
@@ -40,10 +46,11 @@ const RegisterForm = () => {
       await login(formData.email, formData.password);
 
       navigate(`/admin/dashboard/${newOrg.$id}`, { replace: true });
-
-      console.log("Registered successfully!!");
+      toast.dismiss(loadingToastId);
+      toast.success("Registered successfully!!");
     } catch (error) {
-      console.log(error);
+      toast.dismiss(loadingToastId);
+      toast.error(error.message);
     } finally {
       setFormData({
         name: "",
@@ -63,8 +70,13 @@ const RegisterForm = () => {
   };
 
   const registerStudent = async () => {
+    const loadingToastId = toast.loading("Registering...",{
+      style: {
+        backgroundColor: "#fc356c",
+        color: "#fff"   
+      }
+    });
     try {
-      console.log("Registering...");
       const org = await databases.getDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
@@ -72,7 +84,8 @@ const RegisterForm = () => {
       );
 
       if (!org) {
-        alert("Invalid org-code");
+        toast.dismiss(loadingToastId);
+        toast.error("Invalid org-code");
         return;
       }
 
@@ -104,11 +117,11 @@ const RegisterForm = () => {
       await login(formData.email, formData.password);
 
       navigate(`/dashboard/${newStd.$id}`, { replace: true });
-
-      console.log("Registered successfully!!");
+      toast.dismiss(loadingToastId);
+      toast.success("Registered successfully!!");
     } catch (error) {
-      console.log(error);
-      alert(error.message);
+      toast.dismiss(loadingToastId);
+      toast.error(error.message);
     } finally {
       setFormData({
         name: "",

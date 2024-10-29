@@ -5,6 +5,7 @@ import { avatars } from "../../../appwrite/config";
 import { Mail, MapPin, Phone, Pin } from "lucide-react";
 import PasskeyNotification from "../../../components/passkey-notification";
 import { registerPasskey } from "../../../utils/webauthn";
+import { toast } from "react-toastify";
 
 const MainPanel = () => {
   const { userData } = useUserContext();
@@ -15,7 +16,7 @@ const MainPanel = () => {
       setLoading(true);
       await registerPasskey(userData, "STD");
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

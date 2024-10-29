@@ -4,6 +4,7 @@ import { Fingerprint } from "lucide-react";
 import { databases } from "../../../../appwrite/config";
 import { Query } from "appwrite";
 import { loginWithPasskey } from "../../../../utils/webauthn";
+import { toast } from "react-toastify"; 
 
 const Attendence = () => {
   const { userData } = useUserContext();
@@ -58,7 +59,7 @@ const Attendence = () => {
       );
 
       if (!user) {
-        alert("No user found with the following credentials");
+        toast.error("No user found with the following credentials");
       }
 
       const att = JSON.parse(user.documents[0].attendance);
@@ -74,7 +75,7 @@ const Attendence = () => {
           att[userData.$id].total = att[userData.$id].total + 1;
           att[userData.$id].expiryTime = Date.now() + 60 * 60 * 1000;
         } else {
-          alert("Attendance has already been marked");
+          toast.success("Attendance has already been marked");
           return;
         }
       }
@@ -82,7 +83,7 @@ const Attendence = () => {
       const res = await loginWithPasskey(user.documents[0], "STD");
 
       if (!res) {
-        alert("Failed to mark your attendance");
+        toast.error("Failed to mark your attendance");
       } else {
         await databases.updateDocument(
           import.meta.env.VITE_APPWRITE_DB_ID,

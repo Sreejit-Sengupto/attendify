@@ -5,6 +5,7 @@ import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
 import AdminRightPanel from "./right-panel";
 import { databases } from "../appwrite/config";
+import { toast } from "react-toastify";
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState({
@@ -23,7 +24,7 @@ const TopBar = ({ category }) => {
       setLoading({ attBtnLoader: true });
 
       if (!userData.passKey) {
-        alert("You have not registered your passkey yet!");
+        toast.info("You have not registered your passkey yet!");
         return;
       }
 
@@ -34,7 +35,7 @@ const TopBar = ({ category }) => {
 
       if (expiryTime) {
         if (Date.now() < expiryTime) {
-          alert("A session is already active");
+          toast.warn("A session is already active");
           navigate(`/admin/dashboard/${params.userId}/mark-attendance`);
           return;
         }
@@ -46,6 +47,7 @@ const TopBar = ({ category }) => {
 
         expiryTime = Date.now() + 60 * 60 * 1000;
         sessionStorage.setItem("expiry", expiryTime);
+
         await databases.updateDocument(
           import.meta.env.VITE_APPWRITE_DB_ID,
           import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
@@ -54,10 +56,13 @@ const TopBar = ({ category }) => {
             classes: userData.classes + 1,
           }
         );
+
+        toast.success("New attendance session started successfully!");
+
         navigate(`/admin/dashboard/${params.userId}/mark-attendance`);
       }
     } catch (error) {
-      alert(error.message);
+      toast.error("Failed to start attendamce session: "+error.message);
     } finally {
       setLoading({ attBtnLoader: false });
     }
@@ -69,7 +74,7 @@ const TopBar = ({ category }) => {
       await logout();
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     } finally {
       setLoading({ logoutBtnLoader: false });
     }
