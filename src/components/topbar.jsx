@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useUserContext } from "../providers/UserProvider";
-import AdminRightPanel from "./right-panel";
+import RightPanel from "./right-panel";
 import { databases } from "../appwrite/config";
 import CustomModal from "./custom-modal";
 
@@ -157,7 +157,7 @@ const TopBar = ({ category }) => {
           )}
         </button>
 
-        {category === "ORG" && <AdminRightPanel />}
+        <RightPanel category={category} />
       </div>
 
       <CustomModal

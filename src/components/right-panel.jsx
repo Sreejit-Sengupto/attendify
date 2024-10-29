@@ -3,15 +3,19 @@ import { avatars } from "../appwrite/config";
 import { useUserContext } from "../providers/UserProvider";
 import { KeyRound, Mail, Menu, PhoneCall } from "lucide-react";
 import { Button, Drawer } from "@mui/material";
-import UpdateInput from "./updateInput"; 
+import UpdateInput from "./updateInput";
 
-const AdminRightPanel = () => {
+const RightPanel = ({ category }) => {
   const [drawerState, setDrawerState] = useState(false);
-  const [modalType, setModalType] = useState(null); 
+  const [modalType, setModalType] = useState(null);
   const { userData } = useUserContext();
-  const avatar = userData.name && avatars.getInitials(userData.name);
+  const avatar = avatars.getInitials(
+    category === "ORG"
+      ? userData?.name
+      : userData?.firstName + userData?.lastName
+  );
 
-  const copyOrgId = () => {
+  const copyId = () => {
     navigator.clipboard.writeText(userData.$id);
     alert("Org-ID copied to clipboard");
   };
@@ -19,7 +23,7 @@ const AdminRightPanel = () => {
   const toggleDrawer = () => setDrawerState((prev) => !prev);
 
   const openModal = (type) => {
-    setModalType(type); 
+    setModalType(type);
   };
 
   const closeModal = () => {
@@ -42,33 +46,35 @@ const AdminRightPanel = () => {
               className="rounded-full bg-white border-4 border-textPrimary"
             />
             <p className="text-xl font-semibold">
-              {userData.name && userData.name}
+              {category === "ORG"
+                ? userData?.name
+                : userData?.firstName + userData?.lastName}
             </p>
           </div>
 
           <div className="flex flex-col justify-center items-start gap-4 my-5">
             <button
               className="flex justify-center items-center gap-1 bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-lg"
-              onClick={copyOrgId}
+              onClick={copyId}
             >
               <span>
                 <KeyRound />
               </span>
-              <span>{userData.$id && userData.$id}</span>
+              <span>{userData?.$id}</span>
             </button>
 
             <p className="flex justify-center items-center gap-1 border-b-2 border-border">
               <span>
                 <Mail />
               </span>
-              <span>{userData.email && userData.email}</span>
+              <span>{userData?.email}</span>
             </p>
 
             <p className="flex justify-center items-center gap-1 border-b-2 border-border">
               <span>
                 <PhoneCall />
               </span>
-              <span>{userData.phoneNumber && userData.phoneNumber}</span>
+              <span>{userData?.phoneNumber}</span>
             </p>
           </div>
 
@@ -97,15 +103,14 @@ const AdminRightPanel = () => {
 
       {modalType && (
         <UpdateInput
-          type={modalType} 
-          open={!!modalType} 
-          handleClose={closeModal} 
-          userData={userData} 
+          type={modalType}
+          open={!!modalType}
+          handleClose={closeModal}
+          userData={userData}
         />
       )}
     </>
   );
 };
 
-export default AdminRightPanel;
-
+export default RightPanel;
