@@ -255,6 +255,14 @@ const InputForm = ({ type, category, formHandler }) => {
           >
             {showPassword ? <EyeOff /> : <Eye />}
           </button>
+          {type === "LOGIN" && (
+            <Link
+              to={`/recover-password?category=${category}`}
+              className="text-blue-500 text-sm text-right my-1"
+            >
+              Forgot Password?
+            </Link>
+          )}
         </div>
 
         <button
