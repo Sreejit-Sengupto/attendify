@@ -4,6 +4,7 @@ import { registerPasskey } from "../../../../utils/webauthn";
 import { DataGrid } from "@mui/x-data-grid";
 import { Paper } from "@mui/material";
 import PasskeyNotification from "../../../../components/passkey-notification";
+import { toast } from "react-toastify";
 
 const MainPanel = () => {
   const { userData } = useUserContext();
@@ -20,7 +21,7 @@ const MainPanel = () => {
       setLoading(true);
       await registerPasskey(userData, "ORG");
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

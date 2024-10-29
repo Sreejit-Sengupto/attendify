@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { account, databases } from "../appwrite/config"; 
 import { Modal, Box, TextField, Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 const UpdateInput = ({ type, open, handleClose, userData }) => {
   const [inputValue, setInputValue] = useState("");
@@ -12,7 +13,7 @@ const UpdateInput = ({ type, open, handleClose, userData }) => {
       switch (type) {
         case "email":
           if (!password) {
-            alert("Please enter your password to update your email.");
+            toast.info("Please enter your password to update your email.");
             return;
           }
           await account.updateEmail(inputValue, password);
@@ -22,7 +23,7 @@ const UpdateInput = ({ type, open, handleClose, userData }) => {
             userData.$id, 
             { email: inputValue }
           );
-          alert("Email updated successfully!");
+          toast.success("Email updated successfully!");
           location.reload();
           break;
 
@@ -34,17 +35,17 @@ const UpdateInput = ({ type, open, handleClose, userData }) => {
             userData.$id, 
             { phoneNumber: inputValue }
           );
-          alert("Phone number updated successfully!");
+          toast.success("Phone number updated successfully!");
           location.reload();
           break;
 
         case "password":
           if (!password || !oldPassword) {
-            alert("Please enter both the old and new passwords.");
+            toast.info("Please enter both the old and new passwords.");
             return;
           }
           await account.updatePassword(password, oldPassword);
-          alert("Password updated successfully!");
+          toast.success("Password updated successfully!");
           break;
 
         default:
@@ -56,7 +57,7 @@ const UpdateInput = ({ type, open, handleClose, userData }) => {
       handleClose(); 
     } catch (error) {
       console.error(`Error updating ${type}:`, error.message || error);
-      alert(`Failed to update ${type}`);
+      toast.error(`Failed to update ${type}`);
     }
   };
 
