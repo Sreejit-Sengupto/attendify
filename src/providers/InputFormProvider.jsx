@@ -1,22 +1,22 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext } from 'react';
 
 const InputFormContext = createContext(null);
 
 export const InputFormProvider = ({ children }) => {
   const [formData, setFormData] = React.useState({
-    name: "",
-    mobileNumber: "",
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    orgCode: "",
-    rollNo: "",
-    line1: "",
-    line2: "",
-    city: "",
-    state: "",
-    pincode: "",
+    name: '',
+    mobileNumber: '',
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    orgCode: '',
+    rollNo: '',
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    pincode: '',
   });
 
   const contextData = {

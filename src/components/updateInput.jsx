@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { account, databases } from "../appwrite/config";
-import { Modal, Box, TextField, Button } from "@mui/material";
-import { useUserContext } from "../providers/UserProvider";
-import { Loader2 } from "lucide-react";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import { account, databases } from '../appwrite/config';
+import { Modal, Box, TextField, Button } from '@mui/material';
+import { useUserContext } from '../providers/UserProvider';
+import { Loader2 } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const UpdateInput = ({ type, open, handleClose, userData, category }) => {
-  const [inputValue, setInputValue] = useState("");
-  const [password, setPassword] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
   const [loading, setLoading] = React.useState(false);
 
   const { setUser } = useUserContext();
@@ -17,19 +17,33 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
     try {
       setLoading(true);
       if (!password) {
-        toast.info("Please enter your password to update your email.");
+        toast.warning('Please enter your password to update your email.', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
       await account.updateEmail(inputValue, password);
       await databases.updateDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
-        category === "ORG"
+        category === 'ORG'
           ? import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID
           : import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
         userData.$id,
-        { email: inputValue }
+        { email: inputValue },
       );
-      toast.success("Email updated successfully!");
+      toast.success('Email updated successfully!', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
       location.reload();
     } catch (error) {
       console.log(error);
@@ -42,18 +56,32 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
     try {
       setLoading(true);
       if (!inputValue) {
-        toast.info("Please enter mobile number");
+        toast.info('Please enter mobile number', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
       await databases.updateDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
-        category === "ORG"
+        category === 'ORG'
           ? import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID
           : import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
         userData.$id,
-        { phoneNumber: inputValue }
+        { phoneNumber: inputValue },
       );
-      toast.success("Phone number updated successfully!");
+      toast.success('Phone number updated successfully!', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
       location.reload();
     } catch (error) {
       console.log(error);
@@ -66,11 +94,25 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
     try {
       setLoading(true);
       if (!password || !oldPassword) {
-        toast.info("Please enter both the old and new passwords.");
+        toast.info('Please enter both the old and new passwords.', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
       await account.updatePassword(password, oldPassword);
-      toast.success("Password updated successfully!");
+      toast.success('Password updated successfully!', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -81,15 +123,15 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
   const handleUpdate = async () => {
     try {
       switch (type) {
-        case "email":
+        case 'email':
           updateEmail();
           break;
 
-        case "phoneNumber":
+        case 'phoneNumber':
           updatePhoneNumber();
           break;
 
-        case "password":
+        case 'password':
           updatePassword();
           break;
 
@@ -102,7 +144,14 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
       handleClose();
     } catch (error) {
       console.error(`Error updating ${type}:`, error.message || error);
-      toast.error(`Failed to update ${type}`);
+      toast.error(`Failed to update ${type}`, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     }
   };
 
@@ -110,23 +159,23 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
     <Modal open={open} onClose={handleClose}>
       <Box
         sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           width: 400,
-          bgcolor: "#1C1D20",
+          bgcolor: '#1C1D20',
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
-          color: "white",
+          color: 'white',
         }}
       >
-        <h2 style={{ marginBottom: "20px", textAlign: "center" }}>
+        <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>
           Update {type}
         </h2>
 
-        {type === "password" ? (
+        {type === 'password' ? (
           <>
             <TextField
               label="Old Password"
@@ -135,12 +184,12 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
               onChange={(e) => setOldPassword(e.target.value)}
               fullWidth
               margin="normal"
-              InputLabelProps={{ style: { color: "#b0b0b0" } }}
+              InputLabelProps={{ style: { color: '#b0b0b0' } }}
               InputProps={{
                 style: {
-                  color: "white",
-                  backgroundColor: "#2C2F33",
-                  borderRadius: "8px",
+                  color: 'white',
+                  backgroundColor: '#2C2F33',
+                  borderRadius: '8px',
                 },
               }}
             />
@@ -151,12 +200,12 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
               margin="normal"
-              InputLabelProps={{ style: { color: "#b0b0b0" } }}
+              InputLabelProps={{ style: { color: '#b0b0b0' } }}
               InputProps={{
                 style: {
-                  color: "white",
-                  backgroundColor: "#2C2F33",
-                  borderRadius: "8px",
+                  color: 'white',
+                  backgroundColor: '#2C2F33',
+                  borderRadius: '8px',
                 },
               }}
             />
@@ -164,22 +213,22 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
         ) : (
           <>
             <TextField
-              label={type === "email" ? "New Email" : "New " + type}
+              label={type === 'email' ? 'New Email' : 'New ' + type}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               fullWidth
               margin="normal"
-              InputLabelProps={{ style: { color: "#b0b0b0" } }}
+              InputLabelProps={{ style: { color: '#b0b0b0' } }}
               InputProps={{
                 style: {
-                  color: "white",
-                  backgroundColor: "#2C2F33",
-                  borderRadius: "8px",
+                  color: 'white',
+                  backgroundColor: '#2C2F33',
+                  borderRadius: '8px',
                 },
               }}
             />
 
-            {type === "email" && (
+            {type === 'email' && (
               <TextField
                 label="Password"
                 type="password"
@@ -187,12 +236,12 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 fullWidth
                 margin="normal"
-                InputLabelProps={{ style: { color: "#b0b0b0" } }}
+                InputLabelProps={{ style: { color: '#b0b0b0' } }}
                 InputProps={{
                   style: {
-                    color: "white",
-                    backgroundColor: "#2C2F33",
-                    borderRadius: "8px",
+                    color: 'white',
+                    backgroundColor: '#2C2F33',
+                    borderRadius: '8px',
                   },
                 }}
               />
@@ -209,9 +258,9 @@ const UpdateInput = ({ type, open, handleClose, userData, category }) => {
           // className="hover:bg-accent/90 disabled:bg-accent/80"
           sx={{
             marginTop: 2,
-            backgroundColor: "#FC356C",
-            "&:hover": { backgroundColor: "#e02a5c" },
-            "&:disabled": { backgroundColor: "#e02a5c" },
+            backgroundColor: '#FC356C',
+            '&:hover': { backgroundColor: '#e02a5c' },
+            '&:disabled': { backgroundColor: '#e02a5c' },
           }}
         >
           {loading ? <Loader2 className="animate-spin" /> : `Update ${type}`}

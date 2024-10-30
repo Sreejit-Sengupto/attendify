@@ -1,18 +1,19 @@
 import {
   startAuthentication,
   startRegistration,
-} from "@simplewebauthn/browser";
+} from '@simplewebauthn/browser';
+import { toast } from 'react-toastify';
 
 const baseURl = import.meta.env.PROD
-  ? "https://attendify-server-7g6h.onrender.com"
-  : "http://localhost:3000";
+  ? 'https://attendify-server-7g6h.onrender.com'
+  : 'http://localhost:3000';
 
 export const registerPasskey = async (userData, category) => {
   try {
     const response = await fetch(`${baseURl}/api/v1/passkey/register`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ userId: userData.$id, category }),
     });
@@ -22,12 +23,11 @@ export const registerPasskey = async (userData, category) => {
     const { options } = challengeResult;
 
     const authenticationResult = await startRegistration(options);
-    console.log(authenticationResult);
 
     const res = await fetch(`${baseURl}/api/v1/passkey/verify`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         userId: userData.$id,
@@ -36,32 +36,40 @@ export const registerPasskey = async (userData, category) => {
       }),
     });
 
-    console.log(await res.json());
+    const result = await res.json();
+    return result.message;
   } catch (error) {
     console.log(error.message);
+    toast.error(error.message, {
+      style: {
+        backgroundColor: '#121215',
+        border: '1px solid #2D2C31',
+        borderRadius: '12px',
+        color: 'white',
+      },
+    });
   }
 };
 
 export const loginWithPasskey = async (userData, category) => {
   try {
     const response = await fetch(`${baseURl}/api/v1/passkey/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ userId: userData.$id, category }),
     });
 
     const challengeResult = await response.json();
     const { options } = challengeResult;
-    console.log(options);
 
     const authenticationResult = await startAuthentication(options);
 
     const res = await fetch(`${baseURl}/api/v1/passkey/verify-login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         userId: userData.$id,
@@ -71,9 +79,16 @@ export const loginWithPasskey = async (userData, category) => {
     });
 
     const result = await res.json();
-    alert(result.message);
     return result.verification;
   } catch (error) {
     console.log(error);
+    toast.error(error.message, {
+      style: {
+        backgroundColor: '#121215',
+        border: '1px solid #2D2C31',
+        borderRadius: '12px',
+        color: 'white',
+      },
+    });
   }
 };

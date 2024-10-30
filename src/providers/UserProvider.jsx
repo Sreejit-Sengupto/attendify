@@ -1,7 +1,7 @@
-import React, { createContext, useContext } from "react";
-import { account, databases } from "../appwrite/config";
-import { Loader2 } from "lucide-react";
-import { toast } from "react-toastify";
+import React, { createContext, useContext } from 'react';
+import { account, databases } from '../appwrite/config';
+import { Loader2 } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const UserContext = createContext();
 
@@ -16,19 +16,10 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const getUser = async () => {
-    const loadingToastId = toast.loading("Fetching user details...",{
-      style: {
-        backgroundColor: "#fc356c",
-        color: "#fff"
-      }
-    });
     try {
       const loggedInUser = await account.get();
       setUser(loggedInUser);
-      toast.dismiss(loadingToastId);
-      toast.success("User details fetched successfully!");
     } catch (error) {
-      toast.dismiss(loadingToastId);
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -43,26 +34,35 @@ export const UserProvider = ({ children }) => {
       setUser(loggedInUser);
 
       if (!loggedInUser.emailVerification) {
-        const loadingToastId = toast.loading("Sending verficiation mail...",{
+        const loadingToastId = toast.loading('Sending verficiation mail...', {
           style: {
-            backgroundColor: "#fc356c",
-            color: "#fff"   
-          }
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
         });
         await account.createVerification(
-          "http://attendifyapp.vercel.app/verify-email"
+          'http://attendifyapp.vercel.app/verify-email',
         );
         toast.dismiss(loadingToastId);
-        toast.success("Verification mail sent successfully");
+        toast.success('Verification mail sent successfully', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
       }
     } catch (error) {
-      toast.error(error.message);
+      throw new Error(error.message);
     }
   };
 
   const logout = async () => {
     try {
-      await account.deleteSession("current");
+      await account.deleteSession('current');
       setUser(null);
       setUserData({});
     } catch (error) {
@@ -90,7 +90,6 @@ export const UserProvider = ({ children }) => {
     setPasskeyVerified,
     login,
     logout,
-    testData: "Hello",
   };
 
   return (

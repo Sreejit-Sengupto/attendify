@@ -1,5 +1,5 @@
-import React from "react";
-import { Fingerprint, Loader2 } from "lucide-react";
+import React from 'react';
+import { Fingerprint, Loader2 } from 'lucide-react';
 
 const PasskeyNotification = ({ userData, category, clickHandler, loading }) => {
   return (
@@ -8,8 +8,8 @@ const PasskeyNotification = ({ userData, category, clickHandler, loading }) => {
       <div className="bg-secondary m-2 p-3 border rounded-lg border-border flex flex-col lg:flex-row justify-between items-center gap-2">
         <p className="text-textPrimary">
           Passkey not registered yet! You haven't set up your passkey. Please
-          register a passkey to proceed with start{" "}
-          {category === "ORG" ? "taking" : "signing"} attendance.
+          register a passkey to proceed with start{' '}
+          {category === 'ORG' ? 'taking' : 'signing'} attendance.
         </p>
 
         <button

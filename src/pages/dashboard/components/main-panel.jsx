@@ -1,11 +1,11 @@
-import React from "react";
-import { useUserContext } from "../../../providers/UserProvider";
-import { Link } from "react-router-dom";
-import { avatars } from "../../../appwrite/config";
-import { Mail, MapPin, Phone, Pin } from "lucide-react";
-import PasskeyNotification from "../../../components/passkey-notification";
-import { registerPasskey } from "../../../utils/webauthn";
-import { toast } from "react-toastify";
+import React from 'react';
+import { useUserContext } from '../../../providers/UserProvider';
+import { Link } from 'react-router-dom';
+import { avatars } from '../../../appwrite/config';
+import { Mail, MapPin, Phone, Pin } from 'lucide-react';
+import PasskeyNotification from '../../../components/passkey-notification';
+import { registerPasskey } from '../../../utils/webauthn';
+import { toast } from 'react-toastify';
 
 const MainPanel = () => {
   const { userData } = useUserContext();
@@ -14,7 +14,7 @@ const MainPanel = () => {
   const registerStdPasskey = async () => {
     try {
       setLoading(true);
-      await registerPasskey(userData, "STD");
+      await registerPasskey(userData, 'STD');
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -41,7 +41,7 @@ const MainPanel = () => {
     <div className="flex flex-col gap-5 p-3">
       <PasskeyNotification
         userData={userData}
-        category={"STD"}
+        category={'STD'}
         clickHandler={registerStdPasskey}
         loading={loading}
       />

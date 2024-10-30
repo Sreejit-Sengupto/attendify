@@ -1,16 +1,16 @@
-import React from "react";
-import ProtectedRoute from "../../protected-route";
-import DashboardPage from "./dashboard";
-import { useUserContext } from "../../../providers/UserProvider";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import ProtectedRoute from '../../protected-route';
+import DashboardPage from './dashboard';
+import { useUserContext } from '../../../providers/UserProvider';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (!user.labels.includes("ORG")) {
-      navigate("/login");
+    if (!user.labels.includes('ORG')) {
+      navigate('/login');
       return;
     }
   }, [user]);

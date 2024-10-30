@@ -1,9 +1,9 @@
-import React from "react";
-import { useUserContext } from "../providers/UserProvider";
-import { Navigate, useNavigate } from "react-router-dom";
-import { databases } from "../appwrite/config";
-import { Query } from "appwrite";
-import { Circle, Loader2 } from "lucide-react";
+import React from 'react';
+import { useUserContext } from '../providers/UserProvider';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { databases } from '../appwrite/config';
+import { Query } from 'appwrite';
+import { Circle, Loader2 } from 'lucide-react';
 
 const ProtectAuth = ({ children }) => {
   const { user } = useUserContext();
@@ -16,7 +16,7 @@ const ProtectAuth = ({ children }) => {
 
   const getActiveUser = async () => {
     if (!user) {
-      console.log("No user");
+      console.log('No user');
       setFetched(true);
       return;
     }
@@ -24,13 +24,13 @@ const ProtectAuth = ({ children }) => {
     const std = await databases.listDocuments(
       import.meta.env.VITE_APPWRITE_DB_ID,
       import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
-      [Query.equal("email", [user.email])]
+      [Query.equal('email', [user.email])],
     );
 
     const org = await databases.listDocuments(
       import.meta.env.VITE_APPWRITE_DB_ID,
       import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
-      [Query.equal("email", [user.email])]
+      [Query.equal('email', [user.email])],
     );
 
     if (org.documents.length === 0) {

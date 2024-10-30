@@ -1,8 +1,8 @@
-import React from "react";
-import appLogo from "../assets/Attendify.png";
-import { Eye, EyeOff, Loader, Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useInputForm } from "../providers/InputFormProvider";
+import React from 'react';
+import appLogo from '../assets/Attendify.png';
+import { Eye, EyeOff, Loader, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useInputForm } from '../providers/InputFormProvider';
 
 const InputForm = ({ type, category, formHandler }) => {
   const { formData, setFormData } = useInputForm();
@@ -43,8 +43,8 @@ const InputForm = ({ type, category, formHandler }) => {
           className="w-[12rem] h-[12rem]"
         />
         <p className="absolute top-[13rem] text-textPrimary text-xl font-semibold">
-          {type === "REGISTER" ? "Register" : "Login"}{" "}
-          {category === "ORG" ? "as an Organisation" : " as a Student"}
+          {type === 'REGISTER' ? 'Register' : 'Login'}{' '}
+          {category === 'ORG' ? 'as an Organisation' : ' as a Student'}
         </p>
       </div>
 
@@ -54,7 +54,7 @@ const InputForm = ({ type, category, formHandler }) => {
         onSubmit={submitHandler}
         className="md:w-[50%] md:mx-auto font-garamond p-3 flex flex-col gap-3 my-4"
       >
-        {type === "REGISTER" && category === "ORG" && (
+        {type === 'REGISTER' && category === 'ORG' && (
           <div className="flex flex-col text-textPrimary">
             <label htmlFor="">Name</label>
             <input
@@ -64,14 +64,14 @@ const InputForm = ({ type, category, formHandler }) => {
               onChange={handleChange}
               required
               placeholder={`Enter ${
-                category === "ORG" ? "Organisation's" : "Student's"
+                category === 'ORG' ? "Organisation's" : "Student's"
               } Name`}
               className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
             />
           </div>
         )}
 
-        {category === "STUDENT" && type === "REGISTER" && (
+        {category === 'STUDENT' && type === 'REGISTER' && (
           <>
             <div className="flex flex-col text-textPrimary">
               <label htmlFor="">First Name</label>
@@ -130,7 +130,7 @@ const InputForm = ({ type, category, formHandler }) => {
         <div className="flex gap-2 justify-center items-center text-textPrimary">
           <div
             className={`flex flex-col ${
-              type === "REGISTER" ? "w-[50%]" : "w-full"
+              type === 'REGISTER' ? 'w-[50%]' : 'w-full'
             }`}
           >
             <label htmlFor="">Email</label>
@@ -141,13 +141,13 @@ const InputForm = ({ type, category, formHandler }) => {
               onChange={handleChange}
               required
               placeholder={`Enter ${
-                category === "ORG" ? "Organisation's" : "Student's"
+                category === 'ORG' ? "Organisation's" : "Student's"
               } Email address`}
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
             />
           </div>
 
-          {type === "REGISTER" && (
+          {type === 'REGISTER' && (
             <div className="flex flex-col w-[50%]">
               <label htmlFor="" className="">
                 <span className="text-s">Phone Number</span>
@@ -159,7 +159,7 @@ const InputForm = ({ type, category, formHandler }) => {
                 onChange={handleChange}
                 required
                 placeholder={`Enter ${
-                  category === "ORG" ? "Organisation's" : "Student's"
+                  category === 'ORG' ? "Organisation's" : "Student's"
                 } Phone Number`}
                 className="p-3 shadow-md rounded placeholder:text-[12px] placeholder:text-textSecondary bg-[#1C1D20] focus:outline-none focus:ring focus:ring-accent"
               />
@@ -167,7 +167,7 @@ const InputForm = ({ type, category, formHandler }) => {
           )}
         </div>
 
-        {type === "REGISTER" && category === "ORG" && (
+        {type === 'REGISTER' && category === 'ORG' && (
           <>
             <div className="flex flex-col text-textPrimary">
               <label htmlFor="">Address Line 1</label>
@@ -239,23 +239,23 @@ const InputForm = ({ type, category, formHandler }) => {
         <div className="flex flex-col relative text-textPrimary">
           <label htmlFor="">Password</label>
           <input
-            type={showPassword ? "password" : "text"}
+            type={showPassword ? 'password' : 'text'}
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
             placeholder={
-              type === "REGISTER" ? "Enter a password" : "Enter your password"
+              type === 'REGISTER' ? 'Enter a password' : 'Enter your password'
             }
             className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
           />
           <button
-            className="absolute top-[50%] right-3"
+            className="absolute top-[38%] right-3"
             onClick={toggleShowPassword}
           >
             {showPassword ? <EyeOff /> : <Eye />}
           </button>
-          {type === "LOGIN" && (
+          {type === 'LOGIN' && (
             <Link
               to={`/recover-password?category=${category}`}
               className="text-blue-500 text-sm text-right my-1"
@@ -271,10 +271,10 @@ const InputForm = ({ type, category, formHandler }) => {
         >
           {loader ? (
             <Loader2 className="animate-spin mx-auto" />
-          ) : type === "REGISTER" ? (
-            "Register"
+          ) : type === 'REGISTER' ? (
+            'Register'
           ) : (
-            "Login"
+            'Login'
           )}
         </button>
       </form>
@@ -282,12 +282,12 @@ const InputForm = ({ type, category, formHandler }) => {
       <div className="w-[90%] md:w-[60%] h-[2px] bg-slate-200 mx-auto"></div>
 
       <p className="font-roboto flex justify-center items-center my-2 gap-1 text-sm text-textPrimary">
-        {type === "REGISTER" ? "Already Registered?" : "Don't have an account?"}
+        {type === 'REGISTER' ? 'Already Registered?' : "Don't have an account?"}
         <Link
-          to={type === "REGISTER" ? "/login" : "/register"}
+          to={type === 'REGISTER' ? '/login' : '/register'}
           className="text-blue-500"
         >
-          {type === "REGISTER" ? "Login Now" : "Register"}
+          {type === 'REGISTER' ? 'Login Now' : 'Register'}
         </Link>
       </p>
     </>

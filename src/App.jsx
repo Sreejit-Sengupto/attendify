@@ -3,23 +3,23 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-} from "react-router-dom";
-import { ToastContainer, Zoom } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css'; 
+} from 'react-router-dom';
+import { ToastContainer, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
-import Home from "./pages/home";
-import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login";
-import EmailVerification from "./pages/email-verification";
-import { UserProvider } from "./providers/UserProvider";
-import Dashboard from "./pages/dashboard";
-import AdminDashboard from "./pages/admin/dashboard";
-import AttendancePage from "./pages/admin/attendance";
-import MainPanel from "./pages/dashboard/components/main-panel";
-import OrgDetail from "./pages/dashboard/components/org-detail-page";
-import PasswordRecoveryPage from "./pages/password-recovery";
-import NewPasswordPage from "./pages/password-recovery/new-password";
-import ProtectAuth from "./pages/protect-auth";
+import Home from './pages/home';
+import Register from './pages/auth/Register';
+import Login from './pages/auth/Login';
+import EmailVerification from './pages/email-verification';
+import { UserProvider } from './providers/UserProvider';
+import Dashboard from './pages/dashboard';
+import AdminDashboard from './pages/admin/dashboard';
+import AttendancePage from './pages/admin/attendance';
+import MainPanel from './pages/dashboard/components/main-panel';
+import OrgDetail from './pages/dashboard/components/org-detail-page';
+import PasswordRecoveryPage from './pages/password-recovery';
+import NewPasswordPage from './pages/password-recovery/new-password';
+import ProtectAuth from './pages/protect-auth';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,25 +48,27 @@ const router = createBrowserRouter(
           </ProtectAuth>
         }
       />
-    </>
-  )
+    </>,
+  ),
 );
 
 const App = () => {
   return (
     <UserProvider>
       <RouterProvider router={router} />
-      <ToastContainer position="top-center"
-                      autoClose={2000}
-                      hideProgressBar={true}
-                      newestOnTop={true}
-                      closeOnClick
-                      rtl={false}
-                      pauseOnFocusLoss
-                      draggable
-                      pauseOnHover
-                      theme= "colored"
-                      transition={Zoom} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Zoom}
+      />
     </UserProvider>
   );
 };

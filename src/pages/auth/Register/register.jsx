@@ -1,15 +1,15 @@
-import React from "react";
-import InputForm from "../../../components/input-form";
-import { useInputForm } from "../../../providers/InputFormProvider";
-import { register } from "../../../appwrite/auth";
-import { databases } from "../../../appwrite/config";
-import { ID } from "appwrite";
-import { useUserContext } from "../../../providers/UserProvider";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import InputForm from '../../../components/input-form';
+import { useInputForm } from '../../../providers/InputFormProvider';
+import { register } from '../../../appwrite/auth';
+import { databases } from '../../../appwrite/config';
+import { ID } from 'appwrite';
+import { useUserContext } from '../../../providers/UserProvider';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
-  const [category, setCategory] = React.useState("STUDENT");
+  const [category, setCategory] = React.useState('STUDENT');
 
   const { formData, setFormData } = useInputForm();
   const { login } = useUserContext();
@@ -17,14 +17,16 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const registerOrg = async () => {
-    const loadingToastId = toast.loading("Registering...",{
+    const loadingToastId = toast.loading('Registering...', {
       style: {
-        backgroundColor: "#fc356c",
-        color: "#fff"   
-      }
+        backgroundColor: '#121215',
+        border: '1px solid #2D2C31',
+        borderRadius: '12px',
+        color: 'white',
+      },
     });
     try {
-      await register(formData.name, formData.email, formData.password, "ORG");
+      await register(formData.name, formData.email, formData.password, 'ORG');
 
       const dbData = {
         name: formData.name,
@@ -40,52 +42,68 @@ const RegisterForm = () => {
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
         ID.unique(),
-        dbData
+        dbData,
       );
 
       await login(formData.email, formData.password);
 
       navigate(`/admin/dashboard/${newOrg.$id}`, { replace: true });
       toast.dismiss(loadingToastId);
-      toast.success("Registered successfully!!");
+      toast.success('Registered successfully!!', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } catch (error) {
       toast.dismiss(loadingToastId);
-      toast.error(error.message);
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } finally {
       setFormData({
-        name: "",
-        mobileNumber: "",
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        orgCode: "",
-        line1: "",
-        line2: "",
-        city: "",
-        state: "",
-        pincode: "",
+        name: '',
+        mobileNumber: '',
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        orgCode: '',
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        pincode: '',
       });
     }
   };
 
   const registerStudent = async () => {
-    const loadingToastId = toast.loading("Registering...",{
+    const loadingToastId = toast.loading('Registering...', {
       style: {
-        backgroundColor: "#fc356c",
-        color: "#fff"   
-      }
+        backgroundColor: '#121215',
+        border: '1px solid #2D2C31',
+        borderRadius: '12px',
+        color: 'white',
+      },
     });
     try {
       const org = await databases.getDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
-        formData.orgCode
+        formData.orgCode,
       );
 
       if (!org) {
         toast.dismiss(loadingToastId);
-        toast.error("Invalid org-code");
+        toast.error('Invalid org-code');
         return;
       }
 
@@ -93,7 +111,7 @@ const RegisterForm = () => {
         formData.firstName,
         formData.email,
         formData.password,
-        "STD"
+        'STD',
       );
 
       // check if org exists
@@ -111,31 +129,45 @@ const RegisterForm = () => {
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
         ID.unique(),
-        dbData
+        dbData,
       );
 
       await login(formData.email, formData.password);
 
       navigate(`/dashboard/${newStd.$id}`, { replace: true });
       toast.dismiss(loadingToastId);
-      toast.success("Registered successfully!!");
+      toast.success('Registered successfully!!', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } catch (error) {
       toast.dismiss(loadingToastId);
-      toast.error(error.message);
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } finally {
       setFormData({
-        name: "",
-        mobileNumber: "",
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        orgCode: "",
-        line1: "",
-        line2: "",
-        city: "",
-        state: "",
-        pincode: "",
+        name: '',
+        mobileNumber: '',
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        orgCode: '',
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        pincode: '',
       });
     }
   };
@@ -145,39 +177,39 @@ const RegisterForm = () => {
       <div className="flex justify-center items-center my-2 gap-2 font-garamond text-textPrimary">
         <button
           className={`${
-            category === "STUDENT"
-              ? "bg-accent p-2 rounded"
-              : "p-2 border-b-2 border-white border-b-accent"
+            category === 'STUDENT'
+              ? 'bg-accent p-2 rounded'
+              : 'p-2 border-b-2 border-white border-b-accent'
           }`}
-          onClick={() => setCategory("STUDENT")}
+          onClick={() => setCategory('STUDENT')}
         >
           Student
         </button>
         <button
           className={`${
-            category === "ORG"
-              ? "bg-accent p-2 rounded"
-              : "p-2 border-b-2 border-b-accent"
+            category === 'ORG'
+              ? 'bg-accent p-2 rounded'
+              : 'p-2 border-b-2 border-b-accent'
           }`}
-          onClick={() => setCategory("ORG")}
+          onClick={() => setCategory('ORG')}
         >
           Organisation
         </button>
       </div>
       <div>
-        {category === "ORG" && (
+        {category === 'ORG' && (
           <InputForm
             category={category}
-            type={"REGISTER"}
+            type={'REGISTER'}
             formHandler={registerOrg}
           />
         )}
       </div>
       <div>
-        {category === "STUDENT" && (
+        {category === 'STUDENT' && (
           <InputForm
             category={category}
-            type={"REGISTER"}
+            type={'REGISTER'}
             formHandler={registerStudent}
           />
         )}

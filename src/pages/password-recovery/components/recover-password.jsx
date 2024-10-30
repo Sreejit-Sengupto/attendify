@@ -1,46 +1,69 @@
-import React from "react";
-import { Fingerprint, ArrowLeft, Loader2 } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { account, databases } from "../../../appwrite/config";
-import { Query } from "appwrite";
+import React from 'react';
+import { Fingerprint, ArrowLeft, Loader2 } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { account, databases } from '../../../appwrite/config';
+import { Query } from 'appwrite';
+import { toast } from 'react-toastify';
 
 const RecoverPassword = () => {
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [queryParams, setQueryParams] = useSearchParams();
 
   const btnRef = React.useRef(null);
 
-  const category = queryParams.get("category");
+  const category = queryParams.get('category');
 
   const sendRecoveryMail = async (e) => {
     setLoading(true);
     btnRef.current.disabled = true;
     const recoveryMailVerificationURL = import.meta.env.PROD
-      ? "https://attendifyapp.vercel.app/new-password"
-      : "http://localhost:5173/new-password";
+      ? 'https://attendifyapp.vercel.app/new-password'
+      : 'http://localhost:5173/new-password';
     try {
       e.preventDefault();
 
       const isCorrectUser = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
-        category === "ORG"
+        category === 'ORG'
           ? import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID
           : import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
-        [Query.equal("email", [email])]
+        [Query.equal('email', [email])],
       );
 
       if (isCorrectUser.total === 0) {
-        alert("You are not registered with this email");
+        toast.info('You are not registered with this email', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
       await account.createRecovery(email, recoveryMailVerificationURL);
-      alert("Recovery mail sent to the provided email");
+      toast.success('Recovery mail sent to the provided email', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } catch (error) {
       console.log(error);
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } finally {
       setLoading(false);
-      setEmail("");
+      setEmail('');
     }
   };
 
@@ -102,7 +125,7 @@ const RecoverPassword = () => {
                 {loading ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  "Send Recovery Email"
+                  'Send Recovery Email'
                 )}
               </button>
             </form>

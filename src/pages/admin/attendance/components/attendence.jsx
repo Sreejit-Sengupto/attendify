@@ -1,28 +1,23 @@
-import React from "react";
-import { useUserContext } from "../../../../providers/UserProvider";
-import { Fingerprint } from "lucide-react";
-import { databases } from "../../../../appwrite/config";
-import { Query } from "appwrite";
-import { loginWithPasskey } from "../../../../utils/webauthn";
-import { toast } from "react-toastify"; 
+import React from 'react';
+import { useUserContext } from '../../../../providers/UserProvider';
+import { Fingerprint, Loader2 } from 'lucide-react';
+import { databases } from '../../../../appwrite/config';
+import { Query } from 'appwrite';
+import { loginWithPasskey } from '../../../../utils/webauthn';
+import { toast } from 'react-toastify';
 
 const Attendence = () => {
   const { userData } = useUserContext();
 
+  const [loading, setLoading] = React.useState(false);
   const [time, setTime] = React.useState(
-    sessionStorage.getItem("expiry") - Date.now()
+    sessionStorage.getItem('expiry') - Date.now(),
   );
 
   const [input, setInput] = React.useState({
-    rollNo: "",
-    email: "",
+    rollNo: '',
+    email: '',
   });
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setInput((prev) => ({ ...prev, [name]: value }));
-  };
 
   React.useEffect(() => {
     if (time <= 0) {
@@ -40,30 +35,37 @@ const Attendence = () => {
     const hours = Math.floor(time / (1000 * 60 * 60));
     const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
     const secs = Math.floor((time % (1000 * 60)) / 1000);
-    return `${hours.toString().padStart(2, "0")}:${mins
+    return `${hours.toString().padStart(2, '0')}:${mins
       .toString()
-      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const verifyAttendance = async () => {
     try {
+      setLoading(true);
       const user = await databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_STD_COLLECTION_ID,
         [
           Query.or([
-            Query.equal("email", [input.email]),
-            Query.equal("rollNumber", [input.rollNo]),
+            Query.equal('email', [input.email]),
+            Query.equal('rollNumber', [input.rollNo]),
           ]),
-        ]
+        ],
       );
 
       if (!user) {
-        toast.error("No user found with the following credentials");
+        toast.error('No user found with the following credentials', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
       }
 
       const att = JSON.parse(user.documents[0].attendance);
-      console.log(att);
 
       if (!att[userData.$id]) {
         att[userData.$id] = {
@@ -75,15 +77,29 @@ const Attendence = () => {
           att[userData.$id].total = att[userData.$id].total + 1;
           att[userData.$id].expiryTime = Date.now() + 60 * 60 * 1000;
         } else {
-          toast.success("Attendance has already been marked");
+          toast.success('Attendance has already been marked', {
+            style: {
+              backgroundColor: '#121215',
+              border: '1px solid #2D2C31',
+              borderRadius: '12px',
+              color: 'white',
+            },
+          });
           return;
         }
       }
 
-      const res = await loginWithPasskey(user.documents[0], "STD");
+      const res = await loginWithPasskey(user.documents[0], 'STD');
 
       if (!res) {
-        toast.error("Failed to mark your attendance");
+        toast.error('Failed to mark your attendance', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
       } else {
         await databases.updateDocument(
           import.meta.env.VITE_APPWRITE_DB_ID,
@@ -91,16 +107,25 @@ const Attendence = () => {
           user.documents[0].$id,
           {
             attendance: JSON.stringify(att),
-          }
+          },
         );
+        toast.success('Attendance marked successfully', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
       }
     } catch (error) {
       console.error(error);
     } finally {
       setInput({
-        rollNo: "",
-        email: "",
+        rollNo: '',
+        email: '',
       });
+      setLoading(false);
     }
   };
 
@@ -129,7 +154,13 @@ const Attendence = () => {
             type="text"
             name="rollNo"
             value={input.rollNo}
-            onChange={handleChange}
+            onChange={(e) => {
+              e.preventDefault();
+              setInput({
+                email: '',
+                rollNo: e.target.value,
+              });
+            }}
             required
             placeholder="Enter University Roll Number"
             className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary border border-border min-w-[500px] text-textPrimary"
@@ -143,17 +174,24 @@ const Attendence = () => {
             type="email"
             name="email"
             value={input.email}
-            onChange={handleChange}
+            onChange={(e) => {
+              e.preventDefault();
+              setInput({
+                email: e.target.value,
+                rollNo: '',
+              });
+            }}
             required
             placeholder="Enter registered Email ID"
             className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary border border-border min-w-[500px] text-textPrimary"
           />
         </div>
         <button
-          className="bg-accent text-white font-medium p-3 rounded-lg"
+          className="bg-accent text-white font-medium p-3 rounded-lg disabled:bg-accent/80 min-w-[200px] flex justify-center items-center"
           onClick={verifyAttendance}
+          disabled={loading}
         >
-          Mark Attendance
+          {loading ? <Loader2 className="animate-spin" /> : 'Mark Attendance'}
         </button>
       </div>
     </div>

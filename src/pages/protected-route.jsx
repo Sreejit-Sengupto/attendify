@@ -1,7 +1,7 @@
-import React from "react";
-import { useUserContext } from "../providers/UserProvider";
-import { Navigate, Outlet } from "react-router-dom";
-import VerificationPrompt from "./verification-prompt";
+import React from 'react';
+import { useUserContext } from '../providers/UserProvider';
+import { Navigate, Outlet } from 'react-router-dom';
+import VerificationPrompt from './verification-prompt';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useUserContext();

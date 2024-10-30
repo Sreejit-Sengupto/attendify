@@ -1,6 +1,6 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { avatars, databases } from "../../../appwrite/config";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { avatars, databases } from '../../../appwrite/config';
 import {
   Building,
   House,
@@ -13,9 +13,9 @@ import {
   Signature,
   Sigma,
   Percent,
-} from "lucide-react";
-import CustomFieldset from "../../../components/custom-fieldset";
-import { useUserContext } from "../../../providers/UserProvider";
+} from 'lucide-react';
+import CustomFieldset from '../../../components/custom-fieldset';
+import { useUserContext } from '../../../providers/UserProvider';
 
 const OrgDetail = () => {
   const params = useParams();
@@ -31,7 +31,7 @@ const OrgDetail = () => {
       const result = await databases.getDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
-        params.org
+        params.org,
       );
 
       setOrgData(result);
@@ -84,7 +84,7 @@ const OrgDetail = () => {
           </div>
 
           <div className="w-[90%] lg:w-[60%]">
-            <CustomFieldset legend={"Attendance Details"}>
+            <CustomFieldset legend={'Attendance Details'}>
               <p className="flex items-center justify-between">
                 <span className="flex justify-center items-center gap-1">
                   <Sigma color="#FC356C" />
@@ -106,16 +106,16 @@ const OrgDetail = () => {
                 </span>
                 <span
                   className={
-                    percentageDisplay < 75 ? "text-red-500" : "text-green-500"
+                    percentageDisplay < 75 ? 'text-red-500' : 'text-green-500'
                   }
                 >
                   {orgData.classes <= 0
-                    ? "No classes yet"
+                    ? 'No classes yet'
                     : `${percentageDisplay}%`}
                 </span>
               </p>
             </CustomFieldset>
-            <CustomFieldset legend={"Contact Details"}>
+            <CustomFieldset legend={'Contact Details'}>
               <p className="flex items-center justify-between">
                 <span className="flex justify-center items-center gap-1">
                   <Mail color="#FC356C" />
@@ -132,7 +132,7 @@ const OrgDetail = () => {
               </p>
             </CustomFieldset>
 
-            <CustomFieldset legend={"Address"}>
+            <CustomFieldset legend={'Address'}>
               <p className="flex items-center justify-between mb-3">
                 <span className="flex justify-center items-center gap-1">
                   <House color="#FC356C" />

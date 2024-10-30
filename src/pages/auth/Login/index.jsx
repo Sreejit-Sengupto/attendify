@@ -1,7 +1,7 @@
-import React from "react";
-import LoginForm from "./login";
-import { InputFormProvider } from "../../../providers/InputFormProvider";
-import ProtectAuth from "../../protect-auth";
+import React from 'react';
+import LoginForm from './login';
+import { InputFormProvider } from '../../../providers/InputFormProvider';
+import ProtectAuth from '../../protect-auth';
 
 const Login = () => {
   return (

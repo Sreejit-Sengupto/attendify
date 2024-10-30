@@ -1,5 +1,5 @@
-import { Users, ShieldCheck, Clock, BarChart, Fingerprint } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Users, ShieldCheck, Clock, BarChart, Fingerprint } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -43,14 +43,14 @@ const Home = () => {
               <div className="space-x-4">
                 <Link
                   className="bg-[#FC356C] text-[#E5E5E7] hover:bg-[#FC356C]/90 px-6 py-3 rounded-lg"
-                  to={"/login"}
+                  to={'/login'}
                 >
                   Get Started
                 </Link>
                 <Link
                   variant="outline"
                   className="border border-border px-6 py-3 rounded-lg text-[#E5E5E7] hover:bg-[#1C1D20]"
-                  to={"https://github.com/Sreejit-Sengupto/attendify"}
+                  to={'https://github.com/Sreejit-Sengupto/attendify'}
                   target="_blank"
                 >
                   Learn More
@@ -71,33 +71,33 @@ const Home = () => {
               {[
                 {
                   icon: Fingerprint,
-                  title: "WebAuthentication",
+                  title: 'WebAuthentication',
                   content:
-                    "Leverage built-in hardware like fingerprint sensors for secure and easy attendance marking and admin login.",
+                    'Leverage built-in hardware like fingerprint sensors for secure and easy attendance marking and admin login.',
                 },
                 {
                   icon: Users,
-                  title: "Multi-User Support",
+                  title: 'Multi-User Support',
                   content:
-                    "Distinct interfaces and functionalities for administrators and students.",
+                    'Distinct interfaces and functionalities for administrators and students.',
                 },
                 {
                   icon: ShieldCheck,
-                  title: "Enhanced Security",
+                  title: 'Enhanced Security',
                   content:
-                    "Ensure data integrity and prevent attendance fraud with biometric verification.",
+                    'Ensure data integrity and prevent attendance fraud with biometric verification.',
                 },
                 {
                   icon: Clock,
-                  title: "Real-Time Tracking",
+                  title: 'Real-Time Tracking',
                   content:
-                    "Instantly record and update attendance information as students check in.",
+                    'Instantly record and update attendance information as students check in.',
                 },
                 {
                   icon: BarChart,
-                  title: "Comprehensive Reports",
+                  title: 'Comprehensive Reports',
                   content:
-                    "Generate detailed attendance reports and analytics for better insights.",
+                    'Generate detailed attendance reports and analytics for better insights.',
                 },
               ].map((feature, index) => (
                 <div
@@ -127,23 +127,23 @@ const Home = () => {
             <div className="grid gap-6 lg:grid-cols-2">
               {[
                 {
-                  title: "For Administrators",
+                  title: 'For Administrators',
                   steps: [
-                    "Log in securely using WebAuthentication.",
-                    "Attendance for individual classes.",
-                    "View registered students details.",
-                    "View attendance data.",
-                    "More new exciting features to come...",
+                    'Log in securely using WebAuthentication.',
+                    'Attendance for individual classes.',
+                    'View registered students details.',
+                    'View attendance data.',
+                    'More new exciting features to come...',
                   ],
                 },
                 {
-                  title: "For Students",
+                  title: 'For Students',
                   steps: [
-                    "Register your biometric data (one-time setup) or hardware.",
-                    "Use fingerprint or other supported biometric/hardware to mark attendance.",
-                    "View your attendance stats.",
-                    "Receive notifications for successful check-ins(coming soon...)",
-                    "More new exciting features to come...",
+                    'Register your biometric data (one-time setup) or hardware.',
+                    'Use fingerprint or other supported biometric/hardware to mark attendance.',
+                    'View your attendance stats.',
+                    'Receive notifications for successful check-ins(coming soon...)',
+                    'More new exciting features to come...',
                   ],
                 },
               ].map((role, index) => (
@@ -185,7 +185,7 @@ const Home = () => {
                 <Link
                   className="block w-full bg-[#FC356C] text-[#E5E5E7] hover:bg-[#FC356C]/90 rounded-lg p-3"
                   size="lg"
-                  to={"/login"}
+                  to={'/login'}
                 >
                   Try out now!
                 </Link>

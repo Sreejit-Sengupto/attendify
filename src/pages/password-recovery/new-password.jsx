@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { Fingerprint, Eye, EyeOff, Loader2 } from "lucide-react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { account } from "../../appwrite/config";
+import { useState } from 'react';
+import { Fingerprint, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { account } from '../../appwrite/config';
+import { toast } from 'react-toastify';
 
 const NewPasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [queryParams, setQueryParams] = useSearchParams();
@@ -20,31 +21,49 @@ const NewPasswordPage = () => {
       setLoading(true);
       e.preventDefault();
       if (password !== confirmPassword) {
-        setError("Passwords do not match");
+        setError('Passwords do not match');
         return;
       }
       if (password.length < 8) {
-        setError("Password must be at least 8 characters long");
+        setError('Password must be at least 8 characters long');
         return;
       }
-      // Here you would typically send the new password to your backend
-      console.log("New password submitted:", password);
-      // Redirect or show success message
 
-      const userId = queryParams.get("userId");
-      const secret = queryParams.get("secret");
+      const userId = queryParams.get('userId');
+      const secret = queryParams.get('secret');
 
       const token = await account.updateRecovery(userId, secret, password);
       if (!token) {
-        alert("Failed to reset password");
+        toast.error('Failed to reset password', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
-      alert("Password updated");
-      setError("");
-      navigate("/login");
+      toast.success('Password updated', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
+      setError('');
+      navigate('/login');
     } catch (error) {
       setError(error.message);
-      alert("Failed");
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -82,7 +101,7 @@ const NewPasswordPage = () => {
                 <div className="relative">
                   <input
                     id="new-password"
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -126,7 +145,7 @@ const NewPasswordPage = () => {
                 {loading ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  "Set New Password"
+                  'Set New Password'
                 )}
               </button>
             </form>

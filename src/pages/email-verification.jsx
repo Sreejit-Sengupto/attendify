@@ -1,8 +1,7 @@
-import React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { account } from "../appwrite/config";
-import { CheckCircle, CircleX, Loader } from "lucide-react";
-import { toast } from 'react-toastify';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { account } from '../appwrite/config';
+import { CheckCircle, CircleX, Loader } from 'lucide-react';
 
 const EmailVerification = () => {
   const [queryParams, setQueryParams] = useSearchParams();
@@ -11,18 +10,15 @@ const EmailVerification = () => {
 
   const verifyEmail = async () => {
     try {
-      const userId = queryParams.get("userId");
-      const secret = queryParams.get("secret");
+      const userId = queryParams.get('userId');
+      const secret = queryParams.get('secret');
 
       const result = await account.updateVerification(userId, secret);
-
-      toast.success("Verification successfull!", result);
 
       if (result) {
         setVerified(true);
       }
     } catch (error) {
-      toast.error(error.message);
       setErr(true);
     }
   };
@@ -32,7 +28,7 @@ const EmailVerification = () => {
   }, [queryParams, setQueryParams]);
 
   return (
-    <div className="flex flex-col w-full h-[100dvh] justify-center items-center font-garamond">
+    <div className="flex flex-col w-full h-[100dvh] justify-center items-center font-garamond text-textPrimary">
       {verified ? (
         <div className="flex flex-col justify-center items-center gap-2">
           <p className="flex justify-center items-center gap-1 text-2xl font-semibold">

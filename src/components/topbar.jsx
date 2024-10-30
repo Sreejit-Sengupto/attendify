@@ -1,13 +1,12 @@
-import { Loader2, LogIn, LogOut, Plus } from "lucide-react";
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Loader } from "lucide-react";
-import { useUserContext } from "../providers/UserProvider";
-import RightPanel from "./right-panel";
-import { databases } from "../appwrite/config";
-import { toast } from "react-toastify";
-import CustomModal from "./custom-modal";
-
+import { Loader2, LogIn, LogOut, Plus } from 'lucide-react';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Loader } from 'lucide-react';
+import { useUserContext } from '../providers/UserProvider';
+import RightPanel from './right-panel';
+import { databases } from '../appwrite/config';
+import { toast } from 'react-toastify';
+import CustomModal from './custom-modal';
 
 const TopBar = ({ category }) => {
   const [loading, setLoading] = React.useState({
@@ -27,18 +26,32 @@ const TopBar = ({ category }) => {
       setLoading({ attBtnLoader: true });
 
       if (!userData.passKey) {
-        toast.info("You have not registered your passkey yet!");
+        toast.info('You have not registered your passkey yet!', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
 
       // Get expiry from session storage
-      let expiryTime = sessionStorage.getItem("expiry");
+      let expiryTime = sessionStorage.getItem('expiry');
       console.log(Date.now() < expiryTime);
       console.log(expiryTime);
 
       if (expiryTime) {
         if (Date.now() < expiryTime) {
-          toast.warn("A session is already active");
+          toast.warn('A session is already active', {
+            style: {
+              backgroundColor: '#121215',
+              border: '1px solid #2D2C31',
+              borderRadius: '12px',
+              color: 'white',
+            },
+          });
           navigate(`/admin/dashboard/${params.userId}/mark-attendance`);
           return;
         }
@@ -46,10 +59,8 @@ const TopBar = ({ category }) => {
 
       // If it doesn't exists create a new one
       if (!expiryTime || Date.now() > expiryTime) {
-        console.log("I'm in");
-
         expiryTime = Date.now() + 60 * 60 * 1000;
-        sessionStorage.setItem("expiry", expiryTime);
+        sessionStorage.setItem('expiry', expiryTime);
 
         await databases.updateDocument(
           import.meta.env.VITE_APPWRITE_DB_ID,
@@ -57,15 +68,29 @@ const TopBar = ({ category }) => {
           userData.$id,
           {
             classes: userData.classes + 1,
-          }
+          },
         );
 
-        toast.success("New attendance session started successfully!");
+        toast.success('New attendance session started successfully!', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
 
         navigate(`/admin/dashboard/${params.userId}/mark-attendance`);
       }
     } catch (error) {
-      toast.error("Failed to start attendamce session: "+error.message);
+      toast.error('Failed to start attendamce session: ' + error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } finally {
       setLoading({ attBtnLoader: false });
     }
@@ -74,13 +99,27 @@ const TopBar = ({ category }) => {
   const addNewInstitute = async (newOrgId) => {
     try {
       const orgExists = userData.organisation.some(
-        (item) => item.$id === newOrgId
+        (item) => item.$id === newOrgId,
       );
       if (orgExists) {
-        alert("Already added");
+        toast.info('Already added', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
         return;
       }
-      console.log("Adding...");
+      toast.loading('Adding...', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
 
       await databases.updateDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
@@ -88,14 +127,29 @@ const TopBar = ({ category }) => {
         userData.$id,
         {
           organisation: [...userData.organisation, newOrgId],
-        }
+        },
       );
 
-      console.log("Added");
+      toast.success('New Instititue added', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
       window.location.reload();
       navigate(`/dashboard/${userData.$id}`);
     } catch (error) {
       console.log(error);
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     }
   };
 
@@ -103,9 +157,24 @@ const TopBar = ({ category }) => {
     try {
       setLoading({ logoutBtnLoader: true });
       await logout();
-      navigate("/login");
+      navigate('/login');
+      toast.info('Logged out', {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#121215',
+          border: '1px solid #2D2C31',
+          borderRadius: '12px',
+          color: 'white',
+        },
+      });
     } finally {
       setLoading({ logoutBtnLoader: false });
     }
@@ -115,7 +184,7 @@ const TopBar = ({ category }) => {
     <div className="flex justify-between items-center p-2 border-b border-b-border bg-primary">
       <div className="flex justify-center items-center gap-1">
         <img
-          src={"/android-chrome-256x256.png"}
+          src={'/android-chrome-256x256.png'}
           alt="Application icon"
           width={60}
           height={60}
@@ -126,7 +195,7 @@ const TopBar = ({ category }) => {
         <button
           className="font-garamond bg-accent hover:bg-accent/90 text-textPrimary p-3 rounded-md lg:min-w-[150px] flex justify-center items-center disabled:hover:bg-accent/80"
           onClick={
-            category === "ORG" ? startAttendance : () => setOpenModal(true)
+            category === 'ORG' ? startAttendance : () => setOpenModal(true)
           }
           disabled={loading.attBtnLoader}
         >
@@ -135,10 +204,10 @@ const TopBar = ({ category }) => {
           ) : (
             <>
               <span className="hidden lg:inline">
-                {category === "ORG" ? "Start Attendance" : "Add Institute"}
+                {category === 'ORG' ? 'Start Attendance' : 'Add Institute'}
               </span>
               <span className="lg:hidden">
-                {category === "ORG" ? <LogIn /> : <Plus />}
+                {category === 'ORG' ? <LogIn /> : <Plus />}
               </span>
             </>
           )}
