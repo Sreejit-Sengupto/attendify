@@ -15,6 +15,17 @@ const MainPanel = () => {
     try {
       setLoading(true);
       await registerPasskey(userData, 'STD');
+      if (res.message === 'Verified!') {
+        toast.success('Passkey registered successfully', {
+          style: {
+            backgroundColor: '#121215',
+            border: '1px solid #2D2C31',
+            borderRadius: '12px',
+            color: 'white',
+          },
+        });
+      }
+      window.location.reload();
     } catch (error) {
       toast.error(error.message);
     } finally {
