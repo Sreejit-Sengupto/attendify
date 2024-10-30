@@ -230,25 +230,27 @@ const InputForm = ({ type, category, formHandler }) => {
           </>
         )}
 
-        <div className="flex flex-col relative text-textPrimary">
+        <div className="flex flex-col text-textPrimary">
           <label htmlFor="">Password</label>
-          <input
-            type={showPassword ? 'password' : 'text'}
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            placeholder={
-              type === 'REGISTER' ? 'Enter a password' : 'Enter your password'
-            }
-            className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
-          />
-          <button
-            className="absolute top-[38%] right-3"
-            onClick={toggleShowPassword}
-          >
-            {showPassword ? <EyeOff /> : <Eye />}
-          </button>
+          <div className="relative w-full">
+            <input
+              type={showPassword ? 'password' : 'text'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder={
+                type === 'REGISTER' ? 'Enter a password' : 'Enter your password'
+              }
+              className="w-full p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
+            />
+            <button
+              className="absolute top-[30%] right-3"
+              onClick={toggleShowPassword}
+            >
+              {showPassword ? <EyeOff /> : <Eye />}
+            </button>
+          </div>
           {type === 'LOGIN' && (
             <Link
               to={`/recover-password?category=${category}`}
