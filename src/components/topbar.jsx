@@ -1,4 +1,4 @@
-import { Loader2, LogIn, LogOut, Plus } from 'lucide-react';
+import { Fingerprint, Loader2, LogIn, LogOut, Plus } from 'lucide-react';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loader } from 'lucide-react';
@@ -182,14 +182,11 @@ const TopBar = ({ category }) => {
 
   return (
     <div className="flex justify-between items-center p-2 border-b border-b-border bg-primary">
-      <div className="flex justify-center items-center gap-1">
-        <img
-          src={'/android-chrome-256x256.png'}
-          alt="Application icon"
-          width={60}
-          height={60}
-        />
-        <p className="font-bold lg:text-xl text-textPrimary">Attendify</p>
+      <div className="flex justify-center items-center">
+        <Fingerprint className="h-6 w-6 text-[#FC356C]" />
+        <span className="ml-2 text-2xl font-bold text-[#E5E5E7]">
+          Attendify
+        </span>
       </div>
       <div className="flex justify-center items-center gap-2">
         <button

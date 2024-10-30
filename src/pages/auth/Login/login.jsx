@@ -175,8 +175,8 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-      <div className="flex justify-center items-center my-2 gap-2 font-garamond text-textPrimary">
+    <div className="w-full h-[100dvh] flex flex-col justify-center items-center">
+      <div className="w-full flex justify-center items-center my-2 gap-2 font-garamond text-textPrimary">
         <button
           className={`${
             category === 'STUDENT'
@@ -198,7 +198,8 @@ const LoginForm = () => {
           Organisation
         </button>
       </div>
-      <div>
+
+      <div className="w-full">
         {category === 'ORG' && (
           <InputForm
             category={category}
@@ -207,7 +208,7 @@ const LoginForm = () => {
           />
         )}
       </div>
-      <div>
+      <div className="w-full">
         {category === 'STUDENT' && (
           <InputForm
             category={category}
@@ -216,7 +217,7 @@ const LoginForm = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

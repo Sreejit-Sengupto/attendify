@@ -1,6 +1,6 @@
 import React from 'react';
 import appLogo from '../assets/Attendify.png';
-import { Eye, EyeOff, Loader, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Fingerprint, Loader, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInputForm } from '../providers/InputFormProvider';
 
@@ -35,17 +35,11 @@ const InputForm = ({ type, category, formHandler }) => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
-        <img
-          src={appLogo}
-          alt="application logo"
-          loading="lazy"
-          className="w-[12rem] h-[12rem]"
-        />
-        <p className="absolute top-[13rem] text-textPrimary text-xl font-semibold">
-          {type === 'REGISTER' ? 'Register' : 'Login'}{' '}
-          {category === 'ORG' ? 'as an Organisation' : ' as a Student'}
-        </p>
+      <div className="flex justify-center items-center mt-6 mb-2">
+        <Fingerprint className="h-6 w-6 text-[#FC356C]" />
+        <span className="ml-2 text-2xl font-bold text-[#E5E5E7]">
+          Attendify
+        </span>
       </div>
 
       <div className="w-[90%] md:w-[60%] h-[2px] bg-slate-200 mx-auto"></div>
