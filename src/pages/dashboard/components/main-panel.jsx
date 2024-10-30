@@ -14,7 +14,7 @@ const MainPanel = () => {
   const registerStdPasskey = async () => {
     try {
       setLoading(true);
-      await registerPasskey(userData, 'STD');
+      const res = await registerPasskey(userData, 'STD');
       if (res.message === 'Verified!') {
         toast.success('Passkey registered successfully', {
           style: {
