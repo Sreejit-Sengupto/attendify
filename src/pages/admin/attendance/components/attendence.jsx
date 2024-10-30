@@ -5,6 +5,7 @@ import { databases } from '../../../../appwrite/config';
 import { Query } from 'appwrite';
 import { loginWithPasskey } from '../../../../utils/webauthn';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Attendence = () => {
   const { userData } = useUserContext();
@@ -18,6 +19,14 @@ const Attendence = () => {
     rollNo: '',
     email: '',
   });
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!userData.passKey) {
+      navigate(`/dashboard/${userData.$id}`);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (time <= 0) {

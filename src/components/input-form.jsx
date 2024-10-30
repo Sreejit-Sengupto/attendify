@@ -58,7 +58,7 @@ const InputForm = ({ type, category, formHandler }) => {
               onChange={handleChange}
               required
               placeholder={`Enter ${
-                category === 'ORG' ? "Organisation's" : "Student's"
+                category === 'ORG' ? "Institute's" : "Student's"
               } Name`}
               className="p-3 shadow-md rounded focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
             />
@@ -94,7 +94,7 @@ const InputForm = ({ type, category, formHandler }) => {
             </div>
 
             <div className="flex flex-col text-textPrimary">
-              <label htmlFor="">Organisation Code</label>
+              <label htmlFor="">Institute Code</label>
               <input
                 type="text"
                 name="orgCode"
@@ -135,7 +135,7 @@ const InputForm = ({ type, category, formHandler }) => {
               onChange={handleChange}
               required
               placeholder={`Enter ${
-                category === 'ORG' ? "Organisation's" : "Student's"
+                category === 'ORG' ? "Institute's" : "Student's"
               } Email address`}
               className="p-3 shadow-md rounded placeholder:text-[12px] focus:outline-none focus:ring focus:ring-accent bg-[#1C1D20] placeholder:text-textSecondary"
             />
@@ -153,7 +153,7 @@ const InputForm = ({ type, category, formHandler }) => {
                 onChange={handleChange}
                 required
                 placeholder={`Enter ${
-                  category === 'ORG' ? "Organisation's" : "Student's"
+                  category === 'ORG' ? "Institute's" : "Student's"
                 } Phone Number`}
                 className="p-3 shadow-md rounded placeholder:text-[12px] placeholder:text-textSecondary bg-[#1C1D20] focus:outline-none focus:ring focus:ring-accent"
               />
