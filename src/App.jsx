@@ -70,7 +70,7 @@ const App = () => {
       () => {
         serverPinger();
       },
-      30 * 60 * 1000,
+      15 * 60 * 1000,
     );
 
     return () => clearInterval(timerId);
