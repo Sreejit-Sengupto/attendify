@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUserContext } from '../../providers/UserProvider';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import TopBar from '../../components/topbar';
 import MainPanel from './components/main-panel';
 

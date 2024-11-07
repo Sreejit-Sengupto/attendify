@@ -1,25 +1,6 @@
-import React from 'react';
-import ProtectedRoute from '../protected-route';
 import DashboardPage from './dashboard';
-import { useUserContext } from '../../providers/UserProvider';
-import { useNavigate } from 'react-router-dom';
+import withAuthentication from '../../hoc/authenticated';
 
-const Dashboard = () => {
-  const { user } = useUserContext();
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    if (!user.labels.includes('STD')) {
-      navigate('/login');
-      return;
-    }
-  }, [user]);
-
-  return (
-    <ProtectedRoute>
-      <DashboardPage />
-    </ProtectedRoute>
-  );
-};
+const Dashboard = withAuthentication(DashboardPage, false);
 
 export default Dashboard;
