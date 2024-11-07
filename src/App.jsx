@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Route,
   createBrowserRouter,
@@ -53,6 +54,28 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
+  const serverPinger = async () => {
+    try {
+      const baseURl = import.meta.env.PROD
+        ? 'https://attendify-server-7g6h.onrender.com'
+        : 'http://localhost:3000';
+      await fetch(`${baseURl}/api/v1/ping`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    const timerId = setInterval(
+      () => {
+        serverPinger();
+      },
+      30 * 60 * 1000,
+    );
+
+    return () => clearInterval(timerId);
+  }, []);
+
   return (
     <UserProvider>
       <RouterProvider router={router} />
