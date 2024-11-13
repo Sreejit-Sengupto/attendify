@@ -5,7 +5,7 @@ import TopBar from '../../../components/topbar';
 import MainPanel from './components/main-panel';
 
 const DashboardPage = () => {
-  const { getUserData } = useUserContext();
+  const { user, getUserData, addRedirectUrl } = useUserContext();
 
   const { userId } = useParams();
 
@@ -15,6 +15,7 @@ const DashboardPage = () => {
       import.meta.env.VITE_APPWRITE_ORG_COLLECTION_ID,
       userId,
     );
+    addRedirectUrl(user.$id, location.pathname);
   }, []);
 
   return (

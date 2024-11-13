@@ -1,10 +1,10 @@
 import React from 'react';
-import ProtectedRoute from '../protected-route';
 import DashboardPage from './dashboard';
+import withAuthentication from '../../hoc/authenticated';
 import { useUserContext } from '../../providers/UserProvider';
 import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = withAuthentication(() => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -15,11 +15,7 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  return (
-    <ProtectedRoute>
-      <DashboardPage />
-    </ProtectedRoute>
-  );
-};
+  return <DashboardPage />;
+}, false);
 
 export default Dashboard;

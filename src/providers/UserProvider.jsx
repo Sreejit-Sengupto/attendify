@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import { account, databases } from '../appwrite/config';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { ID, Query } from 'appwrite';
 
 const UserContext = createContext();
 
@@ -10,6 +11,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
   const [userData, setUserData] = React.useState({});
   const [passkeyVerified, setPasskeyVerified] = React.useState(false);
+  const [url, setUrl] = React.useState('');
 
   React.useEffect(() => {
     getUser();
@@ -79,6 +81,54 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const addRedirectUrl = async (userId, url) => {
+    try {
+      const doc = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_ORG_REDIRECT_URL_ID,
+        [Query.equal('userId', [userId])],
+      );
+
+      if (doc.total === 0) {
+        console.log('Im in');
+
+        await databases.createDocument(
+          import.meta.env.VITE_APPWRITE_DB_ID,
+          import.meta.env.VITE_APPWRITE_ORG_REDIRECT_URL_ID,
+          ID.unique(),
+          {
+            userId: userId,
+            redirectURL: url,
+          },
+        );
+      } else {
+        await databases.updateDocument(
+          doc.documents[0].$databaseId,
+          doc.documents[0].$collectionId,
+          doc.documents[0].$id,
+          {
+            redirectURL: url,
+          },
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getRedirectUrl = async (userId) => {
+    try {
+      const doc = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_ORG_REDIRECT_URL_ID,
+        [Query.equal('userId', [userId])],
+      );
+      setUrl(doc.documents[0].redirectURL);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const contextData = {
     user,
     setUser,
@@ -90,6 +140,9 @@ export const UserProvider = ({ children }) => {
     setPasskeyVerified,
     login,
     logout,
+    addRedirectUrl,
+    getRedirectUrl,
+    url,
   };
 
   return (
