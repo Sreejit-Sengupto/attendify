@@ -1,10 +1,10 @@
 import React from 'react';
-import ProtectedRoute from '../../protected-route';
 import DashboardPage from './dashboard';
 import { useUserContext } from '../../../providers/UserProvider';
 import { useNavigate } from 'react-router-dom';
+import withAuthentication from '../../../hoc/authenticated';
 
-const AdminDashboard = () => {
+const AdminDashboard = withAuthentication(() => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -15,11 +15,7 @@ const AdminDashboard = () => {
     }
   }, [user]);
 
-  return (
-    <ProtectedRoute>
-      <DashboardPage />
-    </ProtectedRoute>
-  );
-};
+  return <DashboardPage />;
+}, false);
 
 export default AdminDashboard;

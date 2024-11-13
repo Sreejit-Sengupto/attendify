@@ -1,13 +1,6 @@
-import React from 'react';
-import ProtectedRoute from '../../protected-route';
 import Attendence from './components/attendence';
+import withAuthentication from '../../../hoc/authenticated';
 
-const AttendancePage = () => {
-  return (
-    <ProtectedRoute>
-      <Attendence />
-    </ProtectedRoute>
-  );
-};
+const AttendancePage = withAuthentication(Attendence, false);
 
 export default AttendancePage;
